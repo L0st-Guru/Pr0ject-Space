@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pr0ject: Space</title>
+  <meta name="description" content="Pr0ject.space — where ancient infrastructure meets the digital frontier. Products, writing, and ideas at the threshold." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://pr0ject.space" />
+
+  <!-- SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23080808'/><text x='16' y='22' text-anchor='middle' font-family='monospace' font-size='18' font-weight='bold' fill='white'>0</text></svg>" />
+
+  <!-- AEO Schema -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Pr0ject: Space","url":"https://pr0ject.space","description":"A space where old infrastructure meets the new digital world."}</script>
+
+  <!-- OG -->
+  <meta property="og:title" content="Pr0ject: Space" />
+  <meta property="og:description" content="Where ancient infrastructure meets the digital frontier." />
+  <meta property="og:url" content="https://pr0ject.space" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@Pr0jectSpace" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.23/dist/lenis.css" />
+
+  <style>
+    :root {
+      --stone:      #ede8df;
+      --stone-light:#f5f1ea;
+      --stone-dark: #d4cdc2;
+      --stone-mid:  #a89f94;
+      --stone-deep: #7a7068;
+      --black:      #0a0a0a;
+      --off-black:  #141414;
+      --gold:       #c9922a;
+      --gold-pale:  #e8c97a;
+      --gold-dim:   #8a6018;
+      --crimson:    #b01010;
+      --grey:       #1e1e1e;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'Space Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--stone);
+      color: var(--black);
+      font-family: var(--font-serif);
+      font-size: 18px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+      /* Marble-like subtle texture via gradient */
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.4) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(210,200,185,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(180,170,155,0.2) 0%, transparent 40%);
+    }
+
+    /* ── CURSOR ── */
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--black);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.15s ease;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 34px; height: 34px;
+      border: 1px solid rgba(0,0,0,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+    }
+    body.is-hovering .cursor { transform: translate(-50%,-50%) scale(2.5); background: var(--gold); }
+    body.is-hovering .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); opacity: 0.4; }
+
+    /* ── SVG NOISE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9990;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── BG PIXEL CANVAS ── */
+    #bgCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 56px;
+      z-index: 50;
+      overflow: hidden;
+      background: var(--stone-dark);
+    }
+    .sidebar-img {
+      position: absolute;
+      top: -20%; left: 0;
+      width: 100%; height: 140%;
+      object-fit: cover;
+      object-position: 30% center;
+      filter: grayscale(1) contrast(1.15) brightness(0.85);
+      opacity: 0.5;
+      will-change: transform;
+    }
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, var(--stone) 0%, transparent 12%, transparent 88%, var(--stone) 100%),
+        linear-gradient(to right, transparent 60%, var(--stone) 100%);
+    }
+    .sidebar-progress {
+      position: absolute;
+      right: 0; top: 0;
+      width: 2px; height: 100%;
+      background: rgba(0,0,0,0.06);
+      z-index: 2;
+    }
+    .sidebar-progress-fill {
+      width: 100%; height: 0%;
+      background: var(--gold);
+    }
+
+    /* ── SITE WRAPPER ── */
+    .site-wrap { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 56px; right: 0;
+      z-index: 100;
+      padding: 1.8rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(237,232,223,0.96) 0%, transparent 100%);
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      text-decoration: none;
+      position: relative;
+    }
+    .nav-logo .zero { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; position: relative; }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-deep);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      padding: 7rem 4rem 4rem 5rem;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: center;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
+
+    .hero-wordmark {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--stone-mid);
+      display: block;
+      margin-bottom: 0.8rem;
+      opacity: 0;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 5.5vw, 6rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 2rem;
+    }
+    .hero-title em { font-style: italic; color: var(--stone-mid); }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--stone-deep);
+      max-width: 380px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      opacity: 0;
+    }
+
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-light);
+      background: var(--black);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary:hover::after { transform: scaleX(1); }
+
+    .btn-ghost {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-deep);
+      text-decoration: none;
+      border-bottom: 1px solid var(--stone-dark);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .btn-ghost:hover { color: var(--black); border-color: var(--black); }
+
+    /* ── HERO IMAGE AREA ── */
+    .hero-img-wrap {
+      position: relative;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #heroCanvas {
+      width: 100%;
+      height: 100%;
+    }
+    /* Fallback image if canvas fails */
+    .hero-img-fallback {
+      position: absolute;
+      inset: 0;
+      object-fit: contain;
+      object-position: center;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      height: 1px;
+      margin: 0 5rem;
+      background: linear-gradient(to right, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+      opacity: 0.25;
+    }
+
+    /* ── WRITING SECTION ── */
+    .writing {
+      background: var(--black);
+      color: var(--stone);
+      padding: 9rem 4rem 9rem 5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      width: 36px; height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .writing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .writing-text h2 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+      color: var(--stone);
+    }
+    .writing-text h2 em { font-style: italic; color: var(--stone-mid); }
+
+    .writing-text p {
+      color: var(--stone-mid);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+      max-width: 400px;
+    }
+
+    .writing-img-wrap {
+      position: relative;
+      height: 580px;
+      overflow: visible;
+      transform: translateX(100px);
+      opacity: 0;
+    }
+    .writing-img {
+      position: absolute;
+      right: -80px; top: 0;
+      width: 440px; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(0.2) contrast(1.05);
+    }
+    /* Gold kintsugi vein */
+    .writing-img-wrap::before {
+      content: '';
+      position: absolute;
+      top: 10%; bottom: 10%;
+      left: 38%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+      opacity: 0.35;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ── SPLIT-FLAP TEXT (alarm clock flip) ── */
+    .flap-text {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.05em;
+    }
+    .flap-char {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Each character cycles through a flip */
+    @keyframes flipIn {
+      0%   { transform: rotateX(90deg); opacity: 0; }
+      50%  { transform: rotateX(-10deg); opacity: 1; }
+      100% { transform: rotateX(0deg); opacity: 1; }
+    }
+    .flap-char.animate {
+      animation: flipIn 0.25s ease forwards;
+      transform-origin: bottom center;
+    }
+
+    /* ── PROJECTS ── */
+    .projects {
+      background: var(--stone);
+      padding: 9rem 4rem 9rem 5rem;
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .projects-header { margin-bottom: 5rem; }
+    .projects-header h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--black);
+    }
+    .projects-header h2 em { font-style: italic; color: var(--stone-mid); }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--stone-dark);
+    }
+
+    .project-card {
+      background: var(--stone);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: background 0.35s ease;
+    }
+    .project-card:hover { background: var(--stone-light); }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .project-card:hover::after { transform: scaleX(1); }
+
+    .card-corner {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      width: 16px; height: 16px;
+      border-top: 1px solid var(--stone-dark);
+      border-right: 1px solid var(--stone-dark);
+      transition: border-color 0.3s;
+    }
+    .project-card:hover .card-corner { border-color: var(--gold); }
+
+    .card-num {
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      color: var(--stone-mid);
+      margin-bottom: 2rem;
+    }
+    .card-name {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 300;
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+      color: var(--black);
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--stone-deep);
+      line-height: 1.75;
+    }
+    .card-status {
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .status-dev  { color: #4caf7d; }
+    .status-soon { color: var(--stone-mid); }
+
+    /* ── CRIMSON BANNER ── */
+    .banner {
+      background: var(--crimson);
+      padding: 5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner::before {
+      content: 'Pr0ject:';
+      position: absolute;
+      right: -1rem; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: clamp(5rem, 17vw, 15rem);
+      font-weight: 700;
+      color: rgba(0,0,0,0.1);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .banner-text {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+    .banner-text p {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 300;
+      line-height: 1.35;
+      color: #fff;
+    }
+    .banner-text strong { font-weight: 600; }
+
+    /* ── CONNECT ── */
+    .connect {
+      background: var(--off-black);
+      color: var(--stone);
+      padding: 9rem 4rem 9rem 5rem;
+    }
+    .connect .section-label { color: var(--gold); }
+    .connect-inner { max-width: 600px; }
+    .connect-inner h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--stone);
+    }
+    .connect-inner h2 em { font-style: italic; color: var(--stone-mid); }
+    .connect-inner p { color: var(--stone-mid); margin-bottom: 3rem; line-height: 1.8; }
+    .connect-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .connect-link {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+      border: 1px solid #2a2a2a;
+      padding: 0.85rem 1.8rem;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .connect-link:hover { border-color: var(--gold); color: var(--gold); }
+    .connect-link.primary {
+      background: var(--gold); color: var(--black); border-color: var(--gold);
+    }
+    .connect-link.primary:hover { background: var(--gold-pale); border-color: var(--gold-pale); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--off-black);
+      border-top: 1px solid #1a1a1a;
+      padding: 2rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo { font-family: var(--font-mono); font-size: 0.78rem; color: var(--stone-mid); }
+    .footer-logo .zero { color: var(--gold); }
+    .footer-copy { font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.1em; color: #333; }
+
+    /* ── REVEAL UTILITY ── */
+    .reveal { opacity: 0; transform: translateY(36px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem 4.5rem; }
+      .hero-img-wrap { height: 55vw; }
+      .writing { padding: 5rem 1.5rem 5rem 4.5rem; }
+      .writing-grid { grid-template-columns: 1fr; }
+      .writing-img-wrap { height: 300px; transform: none; opacity: 1; }
+      .writing-img { width: 100%; right: 0; }
+      .projects { padding: 5rem 1.5rem 5rem 4.5rem; }
+      .project-grid { grid-template-columns: 1fr; }
+      .banner { padding: 4rem 1.5rem 4rem 4.5rem; }
+      .connect { padding: 5rem 1.5rem 5rem 4.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+      .gold-divider { margin: 0 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .flap-char.animate { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+  <aside class="sidebar" aria-hidden="true">
+    <img class="sidebar-img" id="sidebarImg"
+         src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Forum_Romanum_Rom.jpg/800px-Forum_Romanum_Rom.jpg"
+         alt="" loading="eager" />
+    <div class="sidebar-progress"><div class="sidebar-progress-fill" id="progFill"></div></div>
+  </aside>
+
+  <div class="site-wrap">
+    <nav>
+      <a href="/" class="nav-logo">Pr<span class="zero">0</span>ject:</a>
+      <ul class="nav-links">
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#connect">Connect</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Ancient infrastructure. Digital frontier.</p>
+        <span class="hero-wordmark">Pr0ject: Space</span>
+        <h1 class="hero-title" id="heroTitle">
+          Where old<br>
+          worlds meet<br>
+          <em>new ones.</em>
+        </h1>
+        <p class="hero-sub">
+          A space at the threshold. Products, writing, and ideas
+          built where classical thinking collides with digital reality.
+        </p>
+        <div class="hero-actions">
+          <a href="https://substack.com/@pr0ject" target="_blank" rel="noopener" class="btn-primary">Read the Writing</a>
+          <a href="#projects" class="btn-ghost">Explore Projects →</a>
+        </div>
+      </div>
+      <div class="hero-img-wrap">
+        <canvas id="heroCanvas" aria-label="Classical bust dissolving into digital pixels"></canvas>
+        <img class="hero-img-fallback" id="heroFallback" src="Bust Pixel.jpg" alt="Classical bust with pixel art overlay" />
+      </div>
+    </section>
+
+    <div class="gold-divider"></div>
+
+    <!-- WRITING -->
+    <section class="writing" id="writing">
+      <div class="section-label">Writing</div>
+      <div class="writing-grid">
+        <div class="writing-text">
+          <h2 id="writingHeading" class="reveal">
+            The ideas<br>at the<br><em>threshold.</em>
+          </h2>
+          <p class="reveal">
+            Essays on cybersecurity, artificial intelligence, and the
+            infrastructure of the future — written for people who make
+            decisions, not people who already know the answers.
+          </p>
+          <p class="reveal">No noise. No filler. Published on Substack.</p>
+          <div class="reveal">
+            <a href="https://substack.com/@pr0ject" target="_blank" rel="noopener" class="btn-primary">Read on Substack</a>
+          </div>
+        </div>
+        <div class="writing-img-wrap" id="writingImgWrap">
+          <img class="writing-img" src="Digital Bust.jpg"
+               alt="Classical stone bust fragmenting into digital form" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+      <div class="section-label">Projects</div>
+      <div class="projects-header reveal">
+        <h2>What we're<br><em>building.</em></h2>
+      </div>
+      <div class="project-grid">
+        <a href="/console" class="project-card reveal">
+          <div class="card-corner"></div>
+          <div class="card-num">01</div>
+          <div class="card-name">Pr0ject: Console</div>
+          <h3 class="card-title">Your space in your customers' world.</h3>
+          <p class="card-desc">Mini-sites that give any business a permanent foothold in their customers' environment.</p>
+          <div class="card-status status-dev">&#9679; In Development</div>
+        </a>
+        <a href="/agora" class="project-card reveal">
+          <div class="card-corner"></div>
+          <div class="card-num">02</div>
+          <div class="card-name">Pr0ject: Agora</div>
+          <h3 class="card-title">The marketplace at the centre of the square.</h3>
+          <p class="card-desc">Where technology service providers find their buyers and build their reputation.</p>
+          <div class="card-status status-soon">&#9675; Coming Soon</div>
+        </a>
+        <a href="/janus" class="project-card reveal">
+          <div class="card-corner"></div>
+          <div class="card-num">03</div>
+          <div class="card-name">Pr0ject: Janus</div>
+          <h3 class="card-title">Facing ancient history and galactic future simultaneously.</h3>
+          <p class="card-desc">A long-form world. Gods in a space opera. Tools to take narrative worlds beyond the page.</p>
+          <div class="card-status status-soon">&#9675; Coming Soon</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- BANNER -->
+    <div class="banner">
+      <div class="banner-text reveal">
+        <p><strong>Old infrastructure.</strong> New digital world. Both existing in the same coherent space.</p>
+      </div>
+    </div>
+
+    <!-- CONNECT -->
+    <section class="connect" id="connect">
+      <div class="section-label">Connect</div>
+      <div class="connect-inner reveal">
+        <h2>Follow the<br><em>build.</em></h2>
+        <p>Writing, ideas, and project updates across Substack and X. No noise you didn't ask for.</p>
+        <div class="connect-links">
+          <a href="https://substack.com/@pr0ject" target="_blank" rel="noopener" class="connect-link primary">Substack</a>
+          <a href="https://x.com/Pr0jectSpace" target="_blank" rel="noopener" class="connect-link">X / @Pr0jectSpace</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-logo">Pr<span class="zero">0</span>ject: Space</div>
+      <div class="footer-copy">&copy; 2026 Pr0ject: Space &mdash; pr0ject.space</div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
+
+  <script>
+  (function(){
+    'use strict';
+
+    /* ── GSAP + Lenis ── */
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+    const lenis = new Lenis();
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    /* ── Cursor ── */
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{
+      mx=e.clientX; my=e.clientY;
+      cur.style.left=mx+'px'; cur.style.top=my+'px';
+    });
+    (function tickRing(){
+      rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1;
+      ring.style.left=rx+'px'; ring.style.top=ry+'px';
+      requestAnimationFrame(tickRing);
+    })();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>document.body.classList.add('is-hovering'));
+      el.addEventListener('mouseleave',()=>document.body.classList.remove('is-hovering'));
+    });
+
+    /* ── Background pixel canvas ── */
+    const bgC = document.getElementById('bgCanvas');
+    const bgX = bgC.getContext('2d');
+    let bgP = [];
+    const BGCOLS = ['rgba(10,10,10,','rgba(201,146,42,','rgba(176,16,16,'];
+    function resizeBg(){ bgC.width=innerWidth; bgC.height=innerHeight; }
+    function mkBgP(){
+      const c=Math.random()<0.06?BGCOLS[2]:Math.random()<0.18?BGCOLS[1]:BGCOLS[0];
+      return{x:Math.random()*bgC.width,y:Math.random()*bgC.height,
+             s:Math.random()<0.65?2:3,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,
+             life:0,max:180+Math.random()*280,col:c};
+    }
+    for(let i=0;i<180;i++){const p=mkBgP();p.life=Math.random()*p.max;bgP.push(p);}
+    function drawBg(){
+      bgX.clearRect(0,0,bgC.width,bgC.height);
+      bgP.forEach((p,i)=>{
+        p.life++;
+        if(p.life>=p.max){bgP[i]=mkBgP();return;}
+        const pr=p.life/p.max;
+        const a=pr<0.15?pr/0.15:pr>0.85?(1-pr)/0.15:1;
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0)p.x=bgC.width;if(p.x>bgC.width)p.x=0;
+        if(p.y<0)p.y=bgC.height;if(p.y>bgC.height)p.y=0;
+        bgX.fillStyle=p.col+(a*0.18)+')';
+        bgX.fillRect(~~p.x,~~p.y,p.s,p.s);
+      });
+      requestAnimationFrame(drawBg);
+    }
+    resizeBg();window.addEventListener('resize',resizeBg);drawBg();
+
+    /* ── Hero canvas: bust → pixels with mouse repel ── */
+    const hc = document.getElementById('heroCanvas');
+    const hx = hc.getContext('2d',{willReadFrequently:true});
+    const fallback = document.getElementById('heroFallback');
+    const bustImg = new Image();
+    bustImg.crossOrigin='anonymous';
+    bustImg.src='Bust Pixel.jpg';
+    let hParts=[], hmx=-999, hmy=-999;
+    const GAP=4, REPEL=90, RSTR=3.5;
+
+    function sizeHero(){
+      const w=hc.parentElement;
+      hc.width=w.offsetWidth; hc.height=w.offsetHeight;
+    }
+
+    function buildHero(){
+      hParts=[];
+      if(!bustImg.complete||!bustImg.naturalWidth){
+        fallback.style.opacity='1'; return;
+      }
+      fallback.style.opacity='0';
+      const tmp=document.createElement('canvas');
+      const r=Math.min(hc.width/bustImg.naturalWidth, hc.height/bustImg.naturalHeight)*0.88;
+      tmp.width=bustImg.naturalWidth*r; tmp.height=bustImg.naturalHeight*r;
+      const tc=tmp.getContext('2d');
+      tc.drawImage(bustImg,0,0,tmp.width,tmp.height);
+      const ox=(hc.width-tmp.width)/2, oy=(hc.height-tmp.height)/2;
+      const d=tc.getImageData(0,0,tmp.width,tmp.height).data;
+      for(let y=0;y<tmp.height;y+=GAP){
+        for(let x=0;x<tmp.width;x+=GAP){
+          const i=(y*tmp.width+x)*4;
+          if(d[i+3]<60)continue;
+          const grey=~~(d[i]*.299+d[i+1]*.587+d[i+2]*.114);
+          if(grey>245)continue;
+          const isGold=Math.random()<0.018;
+          hParts.push({
+            ox:ox+x,oy:oy+y,x:ox+x,y:oy+y,vx:0,vy:0,
+            sz:Math.random()<.65?2:Math.random()<.88?3:4,
+            col:isGold?'rgb(201,146,42)':`rgb(${grey},${grey},${grey})`,
+            a:.65+Math.random()*.35
+          });
+        }
+      }
+    }
+
+    function drawHero(){
+      hx.clearRect(0,0,hc.width,hc.height);
+      hParts.forEach(p=>{
+        const dx=p.x-hmx,dy=p.y-hmy,dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<REPEL&&dist>0){
+          const f=(REPEL-dist)/REPEL;
+          p.vx+=(dx/dist)*f*RSTR;
+          p.vy+=(dy/dist)*f*RSTR;
+        }
+        p.vx+=(p.ox-p.x)*.09; p.vy+=(p.oy-p.y)*.09;
+        p.vx*=.80; p.vy*=.80;
+        p.x+=p.vx; p.y+=p.vy;
+        hx.globalAlpha=p.a;
+        hx.fillStyle=p.col;
+        hx.fillRect(~~p.x,~~p.y,p.sz,p.sz);
+      });
+      hx.globalAlpha=1;
+      requestAnimationFrame(drawHero);
+    }
+
+    hc.addEventListener('mousemove',e=>{
+      const r=hc.getBoundingClientRect();
+      hmx=e.clientX-r.left; hmy=e.clientY-r.top;
+    });
+    hc.addEventListener('mouseleave',()=>{hmx=-999;hmy=-999;});
+
+    sizeHero();
+    bustImg.onload=()=>{ buildHero(); drawHero(); };
+    bustImg.onerror=()=>{ fallback.style.opacity='1'; };
+    if(bustImg.complete&&bustImg.naturalWidth){ buildHero(); drawHero(); }
+    window.addEventListener('resize',()=>{ sizeHero(); buildHero(); });
+
+    /* ── Sidebar parallax ── */
+    const sImg=document.getElementById('sidebarImg');
+    if(sImg){
+      gsap.to(sImg,{
+        yPercent:-22,ease:'none',
+        scrollTrigger:{trigger:document.body,start:'top top',end:'bottom bottom',scrub:true}
+      });
+    }
+
+    /* ── Scroll progress bar ── */
+    const pFill=document.getElementById('progFill');
+    lenis.on('scroll',({progress})=>{ if(pFill)pFill.style.height=(progress*100)+'%'; });
+
+    /* ── Hero entrance ── */
+    gsap.to('.hero-eyebrow',{opacity:1,y:0,duration:0.9,ease:'power2.out',delay:0.4});
+    gsap.to('.hero-wordmark',{opacity:1,duration:0.7,ease:'power2.out',delay:0.7});
+    gsap.to('.hero-sub',    {opacity:1,duration:0.8,ease:'power2.out',delay:1.2});
+    gsap.to('.hero-actions',{opacity:1,duration:0.8,ease:'power2.out',delay:1.5});
+
+    /* ── Hero title: SplitText ── */
+    document.fonts.ready.then(()=>{
+      SplitText.create('#heroTitle',{
+        type:'words,chars',autoSplit:true,
+        onSplit(self){
+          return gsap.from(self.chars,{
+            y:55,opacity:0,rotationX:85,stagger:0.025,
+            duration:0.65,ease:'back.out(1.7)',delay:0.6
+          });
+        }
+      });
+    });
+
+    /* ── Split-flap writing heading ── */
+    function splitFlap(el){
+      if(!el)return;
+      const text=el.textContent;
+      el.innerHTML='';
+      const chars=[...text];
+      const spans=chars.map(ch=>{
+        const s=document.createElement('span');
+        s.className='flap-char';
+        s.textContent=ch===' '?'\u00a0':ch;
+        if(ch==='\n'){el.appendChild(document.createElement('br'));return null;}
+        el.appendChild(s);
+        return s;
+      }).filter(Boolean);
+
+      const CHAR_SET='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?-: ';
+
+      function animateChar(span, finalChar, delay){
+        let count=0;
+        const maxFlips=6;
+        setTimeout(()=>{
+          const tick=setInterval(()=>{
+            count++;
+            if(count>=maxFlips){
+              clearInterval(tick);
+              span.textContent=finalChar===' '?'\u00a0':finalChar;
+              span.classList.add('animate');
+            } else {
+              span.textContent=CHAR_SET[~~(Math.random()*CHAR_SET.length)];
+            }
+          },40);
+        }, delay);
+      }
+
+      ScrollTrigger.create({
+        trigger:el,
+        start:'top 80%',
+        once:true,
+        onEnter:()=>{
+          spans.forEach((sp,i)=>{
+            animateChar(sp, chars[i]||' ', i*35);
+          });
+        }
+      });
+    }
+
+    /* Apply split-flap to writing heading lines */
+    const wh=document.getElementById('writingHeading');
+    if(wh){
+      // Strip the inner html to plain text lines for the effect
+      const lines=['The ideas','at the','threshold.'];
+      // We'll apply the effect after the reveal, using a simpler line-by-line approach
+      ScrollTrigger.create({
+        trigger:wh,
+        start:'top 80%',
+        once:true,
+        onEnter:()=>{
+          // Animate each word group with staggered flap
+          const words=wh.querySelectorAll('*');
+          // Fallback to GSAP char animation if split-flap too complex on italic
+          document.fonts.ready.then(()=>{
+            SplitText.create(wh,{
+              type:'chars',autoSplit:true,
+              onSplit(self){
+                return gsap.from(self.chars,{
+                  rotationX:90,
+                  transformOrigin:'center bottom',
+                  opacity:0,
+                  stagger:0.03,
+                  duration:0.3,
+                  ease:'power1.out',
+                  scrollTrigger:{
+                    trigger:wh,
+                    start:'top 80%',
+                    toggleActions:'play none none reverse'
+                  }
+                });
+              }
+            });
+          });
+        }
+      });
+    }
+
+    /* ── Scroll reveals ── */
+    gsap.utils.toArray('.reveal').forEach(el=>{
+      gsap.to(el,{
+        opacity:1,y:0,duration:0.85,ease:'power2.out',
+        scrollTrigger:{trigger:el,start:'top 86%',toggleActions:'play none none reverse'}
+      });
+    });
+
+    /* ── Writing image slide in ── */
+    const wiw=document.getElementById('writingImgWrap');
+    if(wiw){
+      gsap.to(wiw,{
+        x:0,opacity:1,duration:1.1,ease:'power3.out',
+        scrollTrigger:{trigger:wiw,start:'top 82%',toggleActions:'play none none none'}
+      });
+    }
+
+    /* ── Project cards stagger ── */
+    gsap.utils.toArray('.project-card').forEach((c,i)=>{
+      gsap.from(c,{
+        y:45,opacity:0,duration:0.7,delay:i*0.12,ease:'power2.out',
+        scrollTrigger:{trigger:c,start:'top 88%',toggleActions:'play none none reverse'}
+      });
+    });
+
+    /* ── Banner ── */
+    gsap.from('.banner-text',{
+      x:-50,opacity:0,duration:1,ease:'power3.out',
+      scrollTrigger:{trigger:'.banner',start:'top 80%',toggleActions:'play none none none'}
+    });
+
+  })();
+  </script>
+</body>
+</html>
