@@ -6,638 +6,524 @@
   <title>Pr0ject: Space</title>
   <meta name="description" content="Pr0ject.space — where ancient infrastructure meets the digital frontier. Products, writing, and ideas at the threshold." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://pr0ject.space" />
 
-  <!-- SVG Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%23080808'/><text x='16' y='22' text-anchor='middle' font-family='monospace' font-size='18' font-weight='bold' fill='white'>0</text></svg>" />
-
-  <!-- AEO Schema -->
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Pr0ject: Space","url":"https://pr0ject.space","description":"A space where old infrastructure meets the new digital world."}</script>
-
-  <!-- OG -->
-  <meta property="og:title" content="Pr0ject: Space" />
-  <meta property="og:description" content="Where ancient infrastructure meets the digital frontier." />
-  <meta property="og:url" content="https://pr0ject.space" />
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
+  <meta property="og:title" content="Pr0ject: Space" />
+  <meta property="og:description" content="Old infrastructure. New digital world. Both existing in the same coherent space." />
+  <meta property="og:url" content="https://pr0ject.space" />
+  <meta property="og:image" content="https://pr0ject.space/Digital%20Bust.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@Pr0jectSpace" />
   <meta name="twitter:creator" content="@Pr0jectSpace" />
+  <meta name="twitter:title" content="Pr0ject: Space" />
+  <meta name="twitter:description" content="Old infrastructure. New digital world. Both existing in the same coherent space." />
+  <meta name="twitter:image" content="https://pr0ject.space/Digital%20Bust.jpg" />
+
+  <!-- Favicon: Ø on black circle -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='13' fill='%23fff'/%3E%3Ctext x='16' y='21' font-family='serif' font-size='16' text-anchor='middle' fill='%23000'%3E%C3%98%3C/text%3E%3C/svg%3E" />
+
+  <!-- AEO / JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://pr0ject.space/#website",
+        "name": "Pr0ject: Space",
+        "url": "https://pr0ject.space",
+        "description": "A space where old infrastructure meets the new digital world. Products, writing, and ideas that exist at the threshold.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pr0ject: Space",
+          "sameAs": ["https://x.com/Pr0jectSpace", "https://substack.com/@pr0ject"]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Pr0ject: Space?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pr0ject: Space is a digital space exploring the intersection of ancient infrastructure and modern digital systems — publishing products, writing, and ideas that exist at this threshold."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What products does Pr0ject: Space offer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pr0ject: Space is building Console, Agora, and Janus — digital tools and platforms rooted in durable ideas from the ancient world."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where can I read Pr0ject writing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Writing from Pr0ject: Space is published on Substack at substack.com/@pr0ject."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Lenis CSS -->
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.23/dist/lenis.css" />
 
   <style>
+    /* ── TOKENS ───────────────────────────────────────────── */
     :root {
-      --stone:      #ede8df;
-      --stone-light:#f5f1ea;
-      --stone-dark: #d4cdc2;
-      --stone-mid:  #a89f94;
-      --stone-deep: #7a7068;
-      --black:      #0a0a0a;
-      --off-black:  #141414;
+      --marble:     #ede8df;
       --gold:       #c9922a;
-      --gold-pale:  #e8c97a;
-      --gold-dim:   #8a6018;
       --crimson:    #b01010;
-      --grey:       #1e1e1e;
+      --black:      #080808;
+      --dark:       #0a0a0a;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-mono:  'Space Mono', monospace;
     }
 
+    /* ── RESET ────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: auto; }
-
     body {
-      background: var(--stone);
+      background: var(--marble);
+      background-image:
+        radial-gradient(ellipse at 30% 20%, rgba(201,146,42,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 75% 80%, rgba(0,0,0,0.08) 0%, transparent 55%);
       color: var(--black);
       font-family: var(--font-serif);
       font-size: 18px;
-      line-height: 1.6;
+      line-height: 1.65;
       overflow-x: hidden;
       cursor: none;
-      /* Marble-like subtle texture via gradient */
-      background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.4) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(210,200,185,0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 60% 80%, rgba(180,170,155,0.2) 0%, transparent 40%);
     }
 
-    /* ── CURSOR ── */
-    .cursor {
+    /* ── CUSTOM CURSOR ────────────────────────────────────── */
+    #cursor-dot,
+    #cursor-ring {
       position: fixed;
-      width: 8px; height: 8px;
-      background: var(--black);
+      top: 0; left: 0;
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
-      transform: translate(-50%,-50%);
-      transition: transform 0.15s ease;
+      transform: translate(-50%, -50%);
+      will-change: left, top;
     }
-    .cursor-ring {
-      position: fixed;
+    #cursor-dot  { width: 8px; height: 8px; background: var(--black); transition: background 0.18s; }
+    #cursor-ring {
       width: 34px; height: 34px;
-      border: 1px solid rgba(0,0,0,0.4);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%,-50%);
+      border: 1.5px solid var(--black);
+      background: transparent;
+      transition: border-color 0.18s;
     }
-    body.is-hovering .cursor { transform: translate(-50%,-50%) scale(2.5); background: var(--gold); }
-    body.is-hovering .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); opacity: 0.4; }
+    body.cursor-gold #cursor-dot  { background: var(--gold); }
+    body.cursor-gold #cursor-ring { border-color: var(--gold); }
 
-    /* ── SVG NOISE ── */
-    body::before {
-      content: '';
+    /* ── GLOBAL DUST CANVAS ───────────────────────────────── */
+    #dustCanvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 9990;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index: 1;
     }
 
-    /* ── BG PIXEL CANVAS ── */
-    #bgCanvas {
+    /* ── SIDEBAR ──────────────────────────────────────────── */
+    #sidebar {
       position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      position: fixed;
-      left: 0; top: 0; bottom: 0;
+      left: 0; top: 0;
       width: 56px;
-      z-index: 50;
+      height: 100vh;
+      z-index: 100;
       overflow: hidden;
-      background: var(--stone-dark);
     }
-    .sidebar-img {
-      position: absolute;
-      top: -20%; left: 0;
-      width: 100%; height: 140%;
+    #sidebarImg {
+      width: 100%;
+      height: 130%;
       object-fit: cover;
-      object-position: 30% center;
-      filter: grayscale(1) contrast(1.15) brightness(0.85);
-      opacity: 0.5;
-      will-change: transform;
+      filter: grayscale(1);
+      transform-origin: top center;
     }
-    .sidebar::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, var(--stone) 0%, transparent 12%, transparent 88%, var(--stone) 100%),
-        linear-gradient(to right, transparent 60%, var(--stone) 100%);
-    }
-    .sidebar-progress {
+    #progressBar {
       position: absolute;
       right: 0; top: 0;
-      width: 2px; height: 100%;
-      background: rgba(0,0,0,0.06);
-      z-index: 2;
-    }
-    .sidebar-progress-fill {
-      width: 100%; height: 0%;
+      width: 2px;
+      height: 0%;
       background: var(--gold);
     }
 
-    /* ── SITE WRAPPER ── */
-    .site-wrap { position: relative; z-index: 1; }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 56px; right: 0;
-      z-index: 100;
-      padding: 1.8rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* ── PAGE WRAP ────────────────────────────────────────── */
+    #pageWrap {
+      margin-left: 56px;
+      position: relative;
+      z-index: 2;
     }
-    nav::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(237,232,223,0.96) 0%, transparent 100%);
+
+    /* ── NAV ──────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 60px;
+      background: rgba(237,232,223,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
     }
     .nav-logo {
       font-family: var(--font-mono);
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
       color: var(--black);
       text-decoration: none;
-      position: relative;
     }
-    .nav-logo .zero { color: var(--gold); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; position: relative; }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
     .nav-links a {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--stone-deep);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--black); }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100svh;
-      padding: 7rem 4rem 4rem 5rem;
-      display: grid;
-      grid-template-columns: 55% 45%;
-      align-items: center;
-      gap: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-content { position: relative; z-index: 2; }
-
-    .hero-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
-
-    .hero-wordmark {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      color: var(--stone-mid);
-      display: block;
-      margin-bottom: 0.8rem;
-      opacity: 0;
-    }
-
-    .hero-title {
-      font-size: clamp(3rem, 5.5vw, 6rem);
-      font-weight: 300;
-      line-height: 0.95;
-      letter-spacing: -0.02em;
-      color: var(--black);
-      margin-bottom: 2rem;
-    }
-    .hero-title em { font-style: italic; color: var(--stone-mid); }
-
-    .hero-sub {
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--stone-deep);
-      max-width: 380px;
-      line-height: 1.8;
-      margin-bottom: 3rem;
-      opacity: 0;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      opacity: 0;
-    }
-
-    .btn-primary {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--stone-light);
-      background: var(--black);
-      padding: 0.9rem 2rem;
-      text-decoration: none;
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 2px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-    .btn-primary:hover { transform: translateY(-2px); }
-    .btn-primary:hover::after { transform: scaleX(1); }
-
-    .btn-ghost {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--stone-deep);
-      text-decoration: none;
-      border-bottom: 1px solid var(--stone-dark);
-      padding-bottom: 2px;
-      transition: color 0.3s, border-color 0.3s;
-    }
-    .btn-ghost:hover { color: var(--black); border-color: var(--black); }
-
-    /* ── HERO IMAGE AREA ── */
-    .hero-img-wrap {
-      position: relative;
-      height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #heroCanvas {
-      width: 100%;
-      height: 100%;
-    }
-    /* Fallback image if canvas fails */
-    .hero-img-fallback {
-      position: absolute;
-      inset: 0;
-      object-fit: contain;
-      object-position: center;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-
-    /* ── DIVIDER ── */
-    .gold-divider {
-      height: 1px;
-      margin: 0 5rem;
-      background: linear-gradient(to right, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
-      opacity: 0.25;
-    }
-
-    /* ── WRITING SECTION ── */
-    .writing {
-      background: var(--black);
-      color: var(--stone);
-      padding: 9rem 4rem 9rem 5rem;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.56rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 3.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .section-label::after {
-      content: '';
-      width: 36px; height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-
-    .writing-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-
-    .writing-text h2 {
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 300;
-      line-height: 1.05;
-      margin-bottom: 2rem;
-      color: var(--stone);
-    }
-    .writing-text h2 em { font-style: italic; color: var(--stone-mid); }
-
-    .writing-text p {
-      color: var(--stone-mid);
-      font-size: 1rem;
-      line-height: 1.85;
-      margin-bottom: 1.5rem;
-      max-width: 400px;
-    }
-
-    .writing-img-wrap {
-      position: relative;
-      height: 580px;
-      overflow: visible;
-      transform: translateX(100px);
-      opacity: 0;
-    }
-    .writing-img {
-      position: absolute;
-      right: -80px; top: 0;
-      width: 440px; height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      filter: grayscale(0.2) contrast(1.05);
-    }
-    /* Gold kintsugi vein */
-    .writing-img-wrap::before {
-      content: '';
-      position: absolute;
-      top: 10%; bottom: 10%;
-      left: 38%;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
-      opacity: 0.35;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    /* ── SPLIT-FLAP TEXT (alarm clock flip) ── */
-    .flap-text {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 0.05em;
-    }
-    .flap-char {
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-    }
-    /* Each character cycles through a flip */
-    @keyframes flipIn {
-      0%   { transform: rotateX(90deg); opacity: 0; }
-      50%  { transform: rotateX(-10deg); opacity: 1; }
-      100% { transform: rotateX(0deg); opacity: 1; }
-    }
-    .flap-char.animate {
-      animation: flipIn 0.25s ease forwards;
-      transform-origin: bottom center;
-    }
-
-    /* ── PROJECTS ── */
-    .projects {
-      background: var(--stone);
-      padding: 9rem 4rem 9rem 5rem;
-      border-top: 1px solid rgba(0,0,0,0.07);
-    }
-
-    .projects-header { margin-bottom: 5rem; }
-    .projects-header h2 {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--black);
-    }
-    .projects-header h2 em { font-style: italic; color: var(--stone-mid); }
-
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--stone-dark);
-    }
-
-    .project-card {
-      background: var(--stone);
-      padding: 3rem 2.5rem;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      transition: background 0.35s ease;
-    }
-    .project-card:hover { background: var(--stone-light); }
-    .project-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .project-card:hover::after { transform: scaleX(1); }
-
-    .card-corner {
-      position: absolute;
-      top: 1.5rem; right: 1.5rem;
-      width: 16px; height: 16px;
-      border-top: 1px solid var(--stone-dark);
-      border-right: 1px solid var(--stone-dark);
-      transition: border-color 0.3s;
-    }
-    .project-card:hover .card-corner { border-color: var(--gold); }
-
-    .card-num {
-      font-family: var(--font-mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.2em;
-      color: var(--stone-mid);
-      margin-bottom: 2rem;
-    }
-    .card-name {
       font-family: var(--font-mono);
       font-size: 0.7rem;
       letter-spacing: 0.1em;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-    .card-title {
-      font-size: 1.4rem;
-      font-weight: 300;
-      line-height: 1.25;
-      margin-bottom: 1.5rem;
-      color: var(--black);
-    }
-    .card-desc {
-      font-size: 0.88rem;
-      color: var(--stone-deep);
-      line-height: 1.75;
-    }
-    .card-status {
-      margin-top: 2rem;
-      font-family: var(--font-mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.16em;
       text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      opacity: 0.55;
+      transition: opacity 0.2s;
     }
-    .status-dev  { color: #4caf7d; }
-    .status-soon { color: var(--stone-mid); }
+    .nav-links a:hover { opacity: 1; }
 
-    /* ── CRIMSON BANNER ── */
-    .banner {
-      background: var(--crimson);
-      padding: 5rem 5rem;
+    /* ── HERO ─────────────────────────────────────────────── */
+    #hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: center;
+      padding: 80px 64px 80px 48px;
+      gap: 48px;
+    }
+    .hero-left { max-width: 600px; }
+    #heroEyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 24px;
+    }
+    #heroTitle {
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      perspective: 600px;
+    }
+    #heroBody {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.78;
+      opacity: 0.68;
+      max-width: 460px;
+      margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Buttons */
+    .btn {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 28px;
+      border: 1px solid var(--black);
+      color: var(--black);
+      background: transparent;
+      cursor: none;
+      transition: background 0.22s, color 0.22s;
+      display: inline-block;
+    }
+    .btn:hover { background: var(--black); color: var(--marble); }
+    .btn-gold { background: var(--gold); border-color: var(--gold); color: #fff; }
+    .btn-gold:hover { background: #a87820; border-color: #a87820; color: #fff; }
+    .btn-outline-light { border-color: rgba(237,232,223,0.55); color: var(--marble); }
+    .btn-outline-light:hover { background: var(--marble); color: var(--dark); }
+
+    /* ── HERO RIGHT — particle bust ───────────────────────── */
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    #bustCanvas { display: block; max-width: 100%; max-height: 72svh; }
+    #bustFallback { display: none; max-width: 100%; max-height: 72svh; object-fit: contain; filter: grayscale(1); }
+
+    /* ── WRITING ──────────────────────────────────────────── */
+    #writing {
+      background: var(--dark);
+      color: var(--marble);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 64px;
+      padding: 120px 64px 120px 48px;
+    }
+    #writingHeading {
+      font-family: var(--font-mono);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 28px;
+      min-height: 4em;
+    }
+    .writing-body {
+      font-size: 1.05rem;
+      font-weight: 300;
+      opacity: 0.68;
+      line-height: 1.78;
+      max-width: 440px;
+      margin-bottom: 36px;
+    }
+    .writing-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    #digitalBustImg {
+      max-width: 100%;
+      max-height: 68svh;
+      object-fit: contain;
+      filter: grayscale(0.25) contrast(1.05);
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    .kintsugi-line {
+      position: absolute;
+      top: 0;
+      left: 48%;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--gold) 20%,
+        var(--gold) 80%,
+        transparent 100%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* ── PROJECTS ─────────────────────────────────────────── */
+    #projects {
+      padding: 120px 64px 120px 48px;
+      background: var(--marble);
+    }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.42;
+      margin-bottom: 16px;
+    }
+    .section-heading {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 56px;
+      line-height: 1.1;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .project-card {
+      border: 1px solid rgba(0,0,0,0.11);
+      padding: 40px 32px;
+      background: rgba(255,255,255,0.32);
       position: relative;
       overflow: hidden;
+      text-decoration: none;
+      color: var(--black);
+      display: block;
+      cursor: none;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: box-shadow 0.28s;
     }
-    .banner::before {
-      content: 'Pr0ject:';
+    .project-card:hover { box-shadow: 0 10px 48px rgba(0,0,0,0.09); }
+    .card-underline {
       position: absolute;
-      right: -1rem; top: 50%;
-      transform: translateY(-50%);
-      font-family: var(--font-mono);
-      font-size: clamp(5rem, 17vw, 15rem);
-      font-weight: 700;
-      color: rgba(0,0,0,0.1);
-      letter-spacing: -0.04em;
-      pointer-events: none;
-      white-space: nowrap;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--gold);
+      transition: width 0.38s ease;
     }
-    .banner-text {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-    }
-    .banner-text p {
-      font-size: clamp(1.2rem, 3vw, 2rem);
-      font-weight: 300;
-      line-height: 1.35;
-      color: #fff;
-    }
-    .banner-text strong { font-weight: 600; }
-
-    /* ── CONNECT ── */
-    .connect {
-      background: var(--off-black);
-      color: var(--stone);
-      padding: 9rem 4rem 9rem 5rem;
-    }
-    .connect .section-label { color: var(--gold); }
-    .connect-inner { max-width: 600px; }
-    .connect-inner h2 {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      color: var(--stone);
-    }
-    .connect-inner h2 em { font-style: italic; color: var(--stone-mid); }
-    .connect-inner p { color: var(--stone-mid); margin-bottom: 3rem; line-height: 1.8; }
-    .connect-links { display: flex; flex-wrap: wrap; gap: 1rem; }
-    .connect-link {
+    .project-card:hover .card-underline { width: 100%; }
+    .card-label {
       font-family: var(--font-mono);
       font-size: 0.62rem;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--stone);
-      text-decoration: none;
-      border: 1px solid #2a2a2a;
-      padding: 0.85rem 1.8rem;
-      transition: border-color 0.3s, color 0.3s;
+      opacity: 0.38;
+      margin-bottom: 14px;
     }
-    .connect-link:hover { border-color: var(--gold); color: var(--gold); }
-    .connect-link.primary {
-      background: var(--gold); color: var(--black); border-color: var(--gold);
+    .card-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+      line-height: 1.08;
     }
-    .connect-link.primary:hover { background: var(--gold-pale); border-color: var(--gold-pale); }
+    .card-status {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border: 1px solid currentColor;
+      display: inline-block;
+      opacity: 0.48;
+    }
+    .card-status.active { color: var(--gold); border-color: var(--gold); opacity: 1; }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--off-black);
-      border-top: 1px solid #1a1a1a;
-      padding: 2rem 5rem;
+    /* ── CRIMSON BANNER ───────────────────────────────────── */
+    #banner {
+      background: var(--crimson);
+      color: #fff;
+      padding: 100px 64px 100px 48px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
     }
-    .footer-logo { font-family: var(--font-mono); font-size: 0.78rem; color: var(--stone-mid); }
-    .footer-logo .zero { color: var(--gold); }
-    .footer-copy { font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.1em; color: #333; }
+    #bannerText {
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.32;
+      letter-spacing: 0.01em;
+      max-width: 820px;
+      font-style: italic;
+    }
 
-    /* ── REVEAL UTILITY ── */
-    .reveal { opacity: 0; transform: translateY(36px); }
+    /* ── CONNECT ──────────────────────────────────────────── */
+    #connect {
+      background: var(--dark);
+      color: var(--marble);
+      padding: 120px 64px 120px 48px;
+    }
+    .connect-heading {
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 52px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .connect-links {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .connect-link {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--marble);
+      opacity: 0.5;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: opacity 0.22s, color 0.22s;
+    }
+    .connect-link::after { content: '↗'; font-size: 0.88em; }
+    .connect-link:hover  { opacity: 1; color: var(--gold); }
 
-    /* ── RESPONSIVE ── */
+    /* ── FOOTER ───────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--marble);
+      padding: 36px 64px 36px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    /* ── REVEAL BASE ──────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(32px); }
+
+    /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 860px) {
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem 4.5rem; }
-      .hero-img-wrap { height: 55vw; }
-      .writing { padding: 5rem 1.5rem 5rem 4.5rem; }
-      .writing-grid { grid-template-columns: 1fr; }
-      .writing-img-wrap { height: 300px; transform: none; opacity: 1; }
-      .writing-img { width: 100%; right: 0; }
-      .projects { padding: 5rem 1.5rem 5rem 4.5rem; }
-      .project-grid { grid-template-columns: 1fr; }
-      .banner { padding: 4rem 1.5rem 4rem 4.5rem; }
-      .connect { padding: 5rem 1.5rem 5rem 4.5rem; }
-      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
-      .gold-divider { margin: 0 1.5rem; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1 !important; transform: none !important; }
-      .flap-char.animate { animation: none; opacity: 1; transform: none; }
+      #sidebar { display: none; }
+      #pageWrap { margin-left: 0; }
+      #hero { grid-template-columns: 1fr; padding: 80px 28px; min-height: auto; }
+      .hero-right { display: none; }
+      #writing { grid-template-columns: 1fr; padding: 80px 28px; }
+      .writing-right { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      #projects, #connect { padding: 80px 28px; }
+      #banner { padding: 72px 28px; }
+      footer { padding: 28px; }
+      nav { padding: 0 24px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+  <!-- Custom cursor -->
+  <div id="cursor-dot"  aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
 
-  <aside class="sidebar" aria-hidden="true">
-    <img class="sidebar-img" id="sidebarImg"
-         src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Forum_Romanum_Rom.jpg/800px-Forum_Romanum_Rom.jpg"
-         alt="" loading="eager" />
-    <div class="sidebar-progress"><div class="sidebar-progress-fill" id="progFill"></div></div>
+  <!-- Global pixel dust -->
+  <canvas id="dustCanvas" aria-hidden="true"></canvas>
+
+  <!-- Sidebar with Forum Romanum + progress bar -->
+  <aside id="sidebar" aria-hidden="true">
+    <img id="sidebarImg"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Forum_Romanum_Rom.jpg/800px-Forum_Romanum_Rom.jpg"
+      alt="" />
+    <div id="progressBar"></div>
   </aside>
 
-  <div class="site-wrap">
-    <nav>
-      <a href="/" class="nav-logo">Pr<span class="zero">0</span>ject:</a>
+  <div id="pageWrap">
+
+    <!-- NAV -->
+    <nav role="navigation" aria-label="Primary navigation">
+      <a href="/" class="nav-logo">Pr0ject: Space</a>
       <ul class="nav-links">
         <li><a href="#writing">Writing</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -645,407 +531,442 @@
       </ul>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-content">
-        <p class="hero-eyebrow">Ancient infrastructure. Digital frontier.</p>
-        <span class="hero-wordmark">Pr0ject: Space</span>
-        <h1 class="hero-title" id="heroTitle">
-          Where old<br>
-          worlds meet<br>
-          <em>new ones.</em>
-        </h1>
-        <p class="hero-sub">
-          A space at the threshold. Products, writing, and ideas
-          built where classical thinking collides with digital reality.
-        </p>
-        <div class="hero-actions">
-          <a href="https://substack.com/@pr0ject" target="_blank" rel="noopener" class="btn-primary">Read the Writing</a>
-          <a href="#projects" class="btn-ghost">Explore Projects →</a>
-        </div>
-      </div>
-      <div class="hero-img-wrap">
-        <canvas id="heroCanvas" aria-label="Classical bust dissolving into digital pixels"></canvas>
-        <img class="hero-img-fallback" id="heroFallback" src="Bust Pixel.jpg" alt="Classical bust with pixel art overlay" />
-      </div>
-    </section>
+    <main>
 
-    <div class="gold-divider"></div>
-
-    <!-- WRITING -->
-    <section class="writing" id="writing">
-      <div class="section-label">Writing</div>
-      <div class="writing-grid">
-        <div class="writing-text">
-          <h2 id="writingHeading" class="reveal">
-            The ideas<br>at the<br><em>threshold.</em>
-          </h2>
-          <p class="reveal">
-            Essays on cybersecurity, artificial intelligence, and the
-            infrastructure of the future — written for people who make
-            decisions, not people who already know the answers.
+      <!-- ── HERO ──────────────────────────────────────────── -->
+      <section id="hero" aria-labelledby="heroTitle">
+        <div class="hero-left">
+          <p id="heroEyebrow">Est. in the ruins</p>
+          <h1 id="heroTitle">Old worlds,<br>new coordinates.</h1>
+          <p id="heroBody">
+            A space at the threshold of ancient infrastructure and digital possibility.
+            Products, writing, and ideas forged where durable systems meet the frontier.
           </p>
-          <p class="reveal">No noise. No filler. Published on Substack.</p>
-          <div class="reveal">
-            <a href="https://substack.com/@pr0ject" target="_blank" rel="noopener" class="btn-primary">Read on Substack</a>
+          <div class="hero-btns">
+            <a href="#projects" class="btn btn-gold">Explore Projects</a>
+            <a href="#writing"  class="btn">Read Writing</a>
           </div>
         </div>
-        <div class="writing-img-wrap" id="writingImgWrap">
-          <img class="writing-img" src="Digital Bust.jpg"
-               alt="Classical stone bust fragmenting into digital form" loading="lazy" />
+
+        <div class="hero-right" aria-hidden="true">
+          <canvas id="bustCanvas"></canvas>
+          <img id="bustFallback" src="Bust Pixel.jpg" alt="Pixel bust sculpture" />
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- PROJECTS -->
-    <section class="projects" id="projects">
-      <div class="section-label">Projects</div>
-      <div class="projects-header reveal">
-        <h2>What we're<br><em>building.</em></h2>
-      </div>
-      <div class="project-grid">
-        <a href="/console" class="project-card reveal">
-          <div class="card-corner"></div>
-          <div class="card-num">01</div>
-          <div class="card-name">Pr0ject: Console</div>
-          <h3 class="card-title">Your space in your customers' world.</h3>
-          <p class="card-desc">Mini-sites that give any business a permanent foothold in their customers' environment.</p>
-          <div class="card-status status-dev">&#9679; In Development</div>
-        </a>
-        <a href="/agora" class="project-card reveal">
-          <div class="card-corner"></div>
-          <div class="card-num">02</div>
-          <div class="card-name">Pr0ject: Agora</div>
-          <h3 class="card-title">The marketplace at the centre of the square.</h3>
-          <p class="card-desc">Where technology service providers find their buyers and build their reputation.</p>
-          <div class="card-status status-soon">&#9675; Coming Soon</div>
-        </a>
-        <a href="/janus" class="project-card reveal">
-          <div class="card-corner"></div>
-          <div class="card-num">03</div>
-          <div class="card-name">Pr0ject: Janus</div>
-          <h3 class="card-title">Facing ancient history and galactic future simultaneously.</h3>
-          <p class="card-desc">A long-form world. Gods in a space opera. Tools to take narrative worlds beyond the page.</p>
-          <div class="card-status status-soon">&#9675; Coming Soon</div>
-        </a>
-      </div>
-    </section>
+      <!-- ── WRITING ────────────────────────────────────────── -->
+      <section id="writing" aria-labelledby="writingHeading">
+        <div class="writing-left">
+          <h2 id="writingHeading"></h2>
+          <p class="writing-body reveal">
+            Long-form writing on the intersection of classical thought and digital systems.
+            Philosophy, infrastructure, and ideas that have survived empires — applied to
+            the networks we are building now.
+          </p>
+          <a href="https://substack.com/@pr0ject"
+             class="btn btn-outline-light reveal"
+             target="_blank" rel="noopener">
+            Read on Substack
+          </a>
+        </div>
+        <div class="writing-right" aria-hidden="true">
+          <img id="digitalBustImg" src="Digital Bust.jpg" alt="Digital bust sculpture" />
+          <div class="kintsugi-line"></div>
+        </div>
+      </section>
 
-    <!-- BANNER -->
-    <div class="banner">
-      <div class="banner-text reveal">
-        <p><strong>Old infrastructure.</strong> New digital world. Both existing in the same coherent space.</p>
-      </div>
-    </div>
+      <!-- ── PROJECTS ───────────────────────────────────────── -->
+      <section id="projects" aria-labelledby="projectsHeading">
+        <p class="section-eyebrow reveal">Current work</p>
+        <h2 class="section-heading reveal" id="projectsHeading">Products in progress.</h2>
+        <div class="projects-grid">
+          <a href="/console" class="project-card">
+            <div class="card-label">Pr0ject</div>
+            <div class="card-title">Console</div>
+            <span class="card-status active">In Development</span>
+            <div class="card-underline"></div>
+          </a>
+          <a href="/agora" class="project-card">
+            <div class="card-label">Pr0ject</div>
+            <div class="card-title">Agora</div>
+            <span class="card-status">Coming Soon</span>
+            <div class="card-underline"></div>
+          </a>
+          <a href="/janus" class="project-card">
+            <div class="card-label">Pr0ject</div>
+            <div class="card-title">Janus</div>
+            <span class="card-status">Coming Soon</span>
+            <div class="card-underline"></div>
+          </a>
+        </div>
+      </section>
 
-    <!-- CONNECT -->
-    <section class="connect" id="connect">
-      <div class="section-label">Connect</div>
-      <div class="connect-inner reveal">
-        <h2>Follow the<br><em>build.</em></h2>
-        <p>Writing, ideas, and project updates across Substack and X. No noise you didn't ask for.</p>
+      <!-- ── CRIMSON BANNER ──────────────────────────────────── -->
+      <section id="banner" aria-label="Statement">
+        <blockquote id="bannerText">
+          Old infrastructure. New digital world.<br>
+          Both existing in the same coherent space.
+        </blockquote>
+      </section>
+
+      <!-- ── CONNECT ────────────────────────────────────────── -->
+      <section id="connect" aria-labelledby="connectHeading">
+        <h2 class="connect-heading" id="connectHeading">Find us<br>in the open.</h2>
         <div class="connect-links">
-          <a href="https://substack.com/@pr0ject" target="_blank" rel="noopener" class="connect-link primary">Substack</a>
-          <a href="https://x.com/Pr0jectSpace" target="_blank" rel="noopener" class="connect-link">X / @Pr0jectSpace</a>
+          <a href="https://substack.com/@pr0ject" class="connect-link" target="_blank" rel="noopener">
+            Substack — Writing
+          </a>
+          <a href="https://x.com/Pr0jectSpace" class="connect-link" target="_blank" rel="noopener">
+            X / Twitter
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
+
+    </main>
 
     <footer>
-      <div class="footer-logo">Pr<span class="zero">0</span>ject: Space</div>
-      <div class="footer-copy">&copy; 2026 Pr0ject: Space &mdash; pr0ject.space</div>
+      <span>Pr0ject: Space</span>
+      <span>&copy; <span id="footerYear"></span> All rights reserved.</span>
     </footer>
-  </div>
 
+  </div><!-- /pageWrap -->
+
+  <!-- ── CDN SCRIPTS ──────────────────────────────────────── -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
   <script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
 
   <script>
-  (function(){
-    'use strict';
+  'use strict';
 
-    /* ── GSAP + Lenis ── */
-    gsap.registerPlugin(ScrollTrigger, SplitText);
-    const lenis = new Lenis();
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(t => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
+  /* ────────────────────────────────────────────────────────────
+     FOOTER YEAR
+  ──────────────────────────────────────────────────────────── */
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-    /* ── Cursor ── */
-    const cur = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx=0,my=0,rx=0,ry=0;
-    document.addEventListener('mousemove',e=>{
-      mx=e.clientX; my=e.clientY;
-      cur.style.left=mx+'px'; cur.style.top=my+'px';
-    });
-    (function tickRing(){
-      rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1;
-      ring.style.left=rx+'px'; ring.style.top=ry+'px';
-      requestAnimationFrame(tickRing);
+  /* ────────────────────────────────────────────────────────────
+     CUSTOM CURSOR  (8px dot + 34px ring, ring lerps 0.1)
+  ──────────────────────────────────────────────────────────── */
+  (function initCursor() {
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = -200, my = -200, rx = -200, ry = -200;
+
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    (function tick() {
+      dot.style.left  = mx + 'px';
+      dot.style.top   = my + 'px';
+      rx += (mx - rx) * 0.1;
+      ry += (my - ry) * 0.1;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(tick);
     })();
-    document.querySelectorAll('a,button').forEach(el=>{
-      el.addEventListener('mouseenter',()=>document.body.classList.add('is-hovering'));
-      el.addEventListener('mouseleave',()=>document.body.classList.remove('is-hovering'));
+
+    const hoverEls = document.querySelectorAll('a, button, .project-card');
+    hoverEls.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-gold'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-gold'));
     });
-
-    /* ── Background pixel canvas ── */
-    const bgC = document.getElementById('bgCanvas');
-    const bgX = bgC.getContext('2d');
-    let bgP = [];
-    const BGCOLS = ['rgba(10,10,10,','rgba(201,146,42,','rgba(176,16,16,'];
-    function resizeBg(){ bgC.width=innerWidth; bgC.height=innerHeight; }
-    function mkBgP(){
-      const c=Math.random()<0.06?BGCOLS[2]:Math.random()<0.18?BGCOLS[1]:BGCOLS[0];
-      return{x:Math.random()*bgC.width,y:Math.random()*bgC.height,
-             s:Math.random()<0.65?2:3,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,
-             life:0,max:180+Math.random()*280,col:c};
-    }
-    for(let i=0;i<180;i++){const p=mkBgP();p.life=Math.random()*p.max;bgP.push(p);}
-    function drawBg(){
-      bgX.clearRect(0,0,bgC.width,bgC.height);
-      bgP.forEach((p,i)=>{
-        p.life++;
-        if(p.life>=p.max){bgP[i]=mkBgP();return;}
-        const pr=p.life/p.max;
-        const a=pr<0.15?pr/0.15:pr>0.85?(1-pr)/0.15:1;
-        p.x+=p.vx;p.y+=p.vy;
-        if(p.x<0)p.x=bgC.width;if(p.x>bgC.width)p.x=0;
-        if(p.y<0)p.y=bgC.height;if(p.y>bgC.height)p.y=0;
-        bgX.fillStyle=p.col+(a*0.18)+')';
-        bgX.fillRect(~~p.x,~~p.y,p.s,p.s);
-      });
-      requestAnimationFrame(drawBg);
-    }
-    resizeBg();window.addEventListener('resize',resizeBg);drawBg();
-
-    /* ── Hero canvas: bust → pixels with mouse repel ── */
-    const hc = document.getElementById('heroCanvas');
-    const hx = hc.getContext('2d',{willReadFrequently:true});
-    const fallback = document.getElementById('heroFallback');
-    const bustImg = new Image();
-    bustImg.crossOrigin='anonymous';
-    bustImg.src='Bust Pixel.jpg';
-    let hParts=[], hmx=-999, hmy=-999;
-    const GAP=4, REPEL=90, RSTR=3.5;
-
-    function sizeHero(){
-      const w=hc.parentElement;
-      hc.width=w.offsetWidth; hc.height=w.offsetHeight;
-    }
-
-    function buildHero(){
-      hParts=[];
-      if(!bustImg.complete||!bustImg.naturalWidth){
-        fallback.style.opacity='1'; return;
-      }
-      fallback.style.opacity='0';
-      const tmp=document.createElement('canvas');
-      const r=Math.min(hc.width/bustImg.naturalWidth, hc.height/bustImg.naturalHeight)*0.88;
-      tmp.width=bustImg.naturalWidth*r; tmp.height=bustImg.naturalHeight*r;
-      const tc=tmp.getContext('2d');
-      tc.drawImage(bustImg,0,0,tmp.width,tmp.height);
-      const ox=(hc.width-tmp.width)/2, oy=(hc.height-tmp.height)/2;
-      const d=tc.getImageData(0,0,tmp.width,tmp.height).data;
-      for(let y=0;y<tmp.height;y+=GAP){
-        for(let x=0;x<tmp.width;x+=GAP){
-          const i=(y*tmp.width+x)*4;
-          if(d[i+3]<60)continue;
-          const grey=~~(d[i]*.299+d[i+1]*.587+d[i+2]*.114);
-          if(grey>245)continue;
-          const isGold=Math.random()<0.018;
-          hParts.push({
-            ox:ox+x,oy:oy+y,x:ox+x,y:oy+y,vx:0,vy:0,
-            sz:Math.random()<.65?2:Math.random()<.88?3:4,
-            col:isGold?'rgb(201,146,42)':`rgb(${grey},${grey},${grey})`,
-            a:.65+Math.random()*.35
-          });
-        }
-      }
-    }
-
-    function drawHero(){
-      hx.clearRect(0,0,hc.width,hc.height);
-      hParts.forEach(p=>{
-        const dx=p.x-hmx,dy=p.y-hmy,dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<REPEL&&dist>0){
-          const f=(REPEL-dist)/REPEL;
-          p.vx+=(dx/dist)*f*RSTR;
-          p.vy+=(dy/dist)*f*RSTR;
-        }
-        p.vx+=(p.ox-p.x)*.09; p.vy+=(p.oy-p.y)*.09;
-        p.vx*=.80; p.vy*=.80;
-        p.x+=p.vx; p.y+=p.vy;
-        hx.globalAlpha=p.a;
-        hx.fillStyle=p.col;
-        hx.fillRect(~~p.x,~~p.y,p.sz,p.sz);
-      });
-      hx.globalAlpha=1;
-      requestAnimationFrame(drawHero);
-    }
-
-    hc.addEventListener('mousemove',e=>{
-      const r=hc.getBoundingClientRect();
-      hmx=e.clientX-r.left; hmy=e.clientY-r.top;
-    });
-    hc.addEventListener('mouseleave',()=>{hmx=-999;hmy=-999;});
-
-    sizeHero();
-    bustImg.onload=()=>{ buildHero(); drawHero(); };
-    bustImg.onerror=()=>{ fallback.style.opacity='1'; };
-    if(bustImg.complete&&bustImg.naturalWidth){ buildHero(); drawHero(); }
-    window.addEventListener('resize',()=>{ sizeHero(); buildHero(); });
-
-    /* ── Sidebar parallax ── */
-    const sImg=document.getElementById('sidebarImg');
-    if(sImg){
-      gsap.to(sImg,{
-        yPercent:-22,ease:'none',
-        scrollTrigger:{trigger:document.body,start:'top top',end:'bottom bottom',scrub:true}
-      });
-    }
-
-    /* ── Scroll progress bar ── */
-    const pFill=document.getElementById('progFill');
-    lenis.on('scroll',({progress})=>{ if(pFill)pFill.style.height=(progress*100)+'%'; });
-
-    /* ── Hero entrance ── */
-    gsap.to('.hero-eyebrow',{opacity:1,y:0,duration:0.9,ease:'power2.out',delay:0.4});
-    gsap.to('.hero-wordmark',{opacity:1,duration:0.7,ease:'power2.out',delay:0.7});
-    gsap.to('.hero-sub',    {opacity:1,duration:0.8,ease:'power2.out',delay:1.2});
-    gsap.to('.hero-actions',{opacity:1,duration:0.8,ease:'power2.out',delay:1.5});
-
-    /* ── Hero title: SplitText ── */
-    document.fonts.ready.then(()=>{
-      SplitText.create('#heroTitle',{
-        type:'words,chars',autoSplit:true,
-        onSplit(self){
-          return gsap.from(self.chars,{
-            y:55,opacity:0,rotationX:85,stagger:0.025,
-            duration:0.65,ease:'back.out(1.7)',delay:0.6
-          });
-        }
-      });
-    });
-
-    /* ── Split-flap writing heading ── */
-    function splitFlap(el){
-      if(!el)return;
-      const text=el.textContent;
-      el.innerHTML='';
-      const chars=[...text];
-      const spans=chars.map(ch=>{
-        const s=document.createElement('span');
-        s.className='flap-char';
-        s.textContent=ch===' '?'\u00a0':ch;
-        if(ch==='\n'){el.appendChild(document.createElement('br'));return null;}
-        el.appendChild(s);
-        return s;
-      }).filter(Boolean);
-
-      const CHAR_SET='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?-: ';
-
-      function animateChar(span, finalChar, delay){
-        let count=0;
-        const maxFlips=6;
-        setTimeout(()=>{
-          const tick=setInterval(()=>{
-            count++;
-            if(count>=maxFlips){
-              clearInterval(tick);
-              span.textContent=finalChar===' '?'\u00a0':finalChar;
-              span.classList.add('animate');
-            } else {
-              span.textContent=CHAR_SET[~~(Math.random()*CHAR_SET.length)];
-            }
-          },40);
-        }, delay);
-      }
-
-      ScrollTrigger.create({
-        trigger:el,
-        start:'top 80%',
-        once:true,
-        onEnter:()=>{
-          spans.forEach((sp,i)=>{
-            animateChar(sp, chars[i]||' ', i*35);
-          });
-        }
-      });
-    }
-
-    /* Apply split-flap to writing heading lines */
-    const wh=document.getElementById('writingHeading');
-    if(wh){
-      // Strip the inner html to plain text lines for the effect
-      const lines=['The ideas','at the','threshold.'];
-      // We'll apply the effect after the reveal, using a simpler line-by-line approach
-      ScrollTrigger.create({
-        trigger:wh,
-        start:'top 80%',
-        once:true,
-        onEnter:()=>{
-          // Animate each word group with staggered flap
-          const words=wh.querySelectorAll('*');
-          // Fallback to GSAP char animation if split-flap too complex on italic
-          document.fonts.ready.then(()=>{
-            SplitText.create(wh,{
-              type:'chars',autoSplit:true,
-              onSplit(self){
-                return gsap.from(self.chars,{
-                  rotationX:90,
-                  transformOrigin:'center bottom',
-                  opacity:0,
-                  stagger:0.03,
-                  duration:0.3,
-                  ease:'power1.out',
-                  scrollTrigger:{
-                    trigger:wh,
-                    start:'top 80%',
-                    toggleActions:'play none none reverse'
-                  }
-                });
-              }
-            });
-          });
-        }
-      });
-    }
-
-    /* ── Scroll reveals ── */
-    gsap.utils.toArray('.reveal').forEach(el=>{
-      gsap.to(el,{
-        opacity:1,y:0,duration:0.85,ease:'power2.out',
-        scrollTrigger:{trigger:el,start:'top 86%',toggleActions:'play none none reverse'}
-      });
-    });
-
-    /* ── Writing image slide in ── */
-    const wiw=document.getElementById('writingImgWrap');
-    if(wiw){
-      gsap.to(wiw,{
-        x:0,opacity:1,duration:1.1,ease:'power3.out',
-        scrollTrigger:{trigger:wiw,start:'top 82%',toggleActions:'play none none none'}
-      });
-    }
-
-    /* ── Project cards stagger ── */
-    gsap.utils.toArray('.project-card').forEach((c,i)=>{
-      gsap.from(c,{
-        y:45,opacity:0,duration:0.7,delay:i*0.12,ease:'power2.out',
-        scrollTrigger:{trigger:c,start:'top 88%',toggleActions:'play none none reverse'}
-      });
-    });
-
-    /* ── Banner ── */
-    gsap.from('.banner-text',{
-      x:-50,opacity:0,duration:1,ease:'power3.out',
-      scrollTrigger:{trigger:'.banner',start:'top 80%',toggleActions:'play none none none'}
-    });
-
   })();
+
+  /* ────────────────────────────────────────────────────────────
+     GLOBAL DUST CANVAS  (~180 black pixel squares, 2–3px)
+  ──────────────────────────────────────────────────────────── */
+  (function initDust() {
+    const canvas = document.getElementById('dustCanvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const COUNT = 180;
+    const pts = Array.from({ length: COUNT }, () => ({
+      x:     Math.random() * window.innerWidth,
+      y:     Math.random() * window.innerHeight,
+      size:  Math.random() * 1.5 + 1.5,
+      vx:    (Math.random() - 0.5) * 0.3,
+      vy:    (Math.random() - 0.5) * 0.25,
+      alpha: Math.random() * 0.3 + 0.07
+    }));
+
+    (function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of pts) {
+        p.x = (p.x + p.vx + W) % W;
+        p.y = (p.y + p.vy + H) % H;
+        ctx.fillStyle = `rgba(0,0,0,${p.alpha})`;
+        ctx.fillRect(p.x | 0, p.y | 0, p.size | 0, p.size | 0);
+      }
+      requestAnimationFrame(draw);
+    })();
+  })();
+
+  /* ────────────────────────────────────────────────────────────
+     BUST PARTICLE CANVAS
+     Samples "Bust Pixel.jpg" into pixel squares (gap=4).
+     Mouse repels within 90px; particles spring back.
+  ──────────────────────────────────────────────────────────── */
+  (function initBust() {
+    const canvas   = document.getElementById('bustCanvas');
+    const fallback = document.getElementById('bustFallback');
+    const ctx      = canvas.getContext('2d');
+    if (!ctx) { canvas.style.display = 'none'; fallback.style.display = 'block'; return; }
+
+    const img = new Image();
+    img.src = 'Bust Pixel.jpg';
+
+    img.onload = () => {
+      const GAP    = 4;
+      const maxW   = 480, maxH = 640;
+      const scale  = Math.min(maxW / img.naturalWidth, maxH / img.naturalHeight, 1);
+      const iw     = Math.round(img.naturalWidth  * scale);
+      const ih     = Math.round(img.naturalHeight * scale);
+      canvas.width = iw; canvas.height = ih;
+
+      // Sample pixels via offscreen canvas
+      const off  = Object.assign(document.createElement('canvas'), { width: iw, height: ih });
+      const octx = off.getContext('2d');
+      octx.drawImage(img, 0, 0, iw, ih);
+      const px = octx.getImageData(0, 0, iw, ih).data;
+
+      const pts = [];
+      for (let y = 0; y < ih; y += GAP) {
+        for (let x = 0; x < iw; x += GAP) {
+          const i = (y * iw + x) * 4;
+          const a = px[i + 3];
+          if (a < 40) continue;
+          const lum = (px[i] + px[i+1] + px[i+2]) / 3;
+          if (lum > 248) continue;
+          const g   = (lum / 255 * 55) | 0;
+          const gold = Math.random() < 0.03;
+          pts.push({
+            tx: x, ty: y,
+            x:  Math.random() * iw,
+            y:  Math.random() * ih,
+            vx: 0, vy: 0,
+            sz: Math.random() < 0.5 ? 2 : 3,
+            col: gold ? '#c9922a' : `rgb(${g},${g - 2 | 0},${g - 5 | 0})`
+          });
+        }
+      }
+
+      let mx = -999, my = -999;
+      canvas.addEventListener('mousemove', e => {
+        const r = canvas.getBoundingClientRect();
+        mx = e.clientX - r.left;
+        my = e.clientY - r.top;
+      });
+      canvas.addEventListener('mouseleave', () => { mx = -999; my = -999; });
+
+      const R = 90, DAMP = 0.72;
+      (function draw() {
+        ctx.clearRect(0, 0, iw, ih);
+        for (const p of pts) {
+          const dx   = p.x - mx, dy = p.y - my;
+          const dist = Math.hypot(dx, dy);
+          let   ax   = (p.tx - p.x) * 0.08;
+          let   ay   = (p.ty - p.y) * 0.08;
+          if (dist < R && dist > 0.5) {
+            const f = (R - dist) / R * 3.8;
+            ax += dx / dist * f;
+            ay += dy / dist * f;
+          }
+          p.vx = (p.vx + ax) * DAMP;
+          p.vy = (p.vy + ay) * DAMP;
+          p.x += p.vx; p.y += p.vy;
+          ctx.fillStyle = p.col;
+          ctx.fillRect(p.x | 0, p.y | 0, p.sz, p.sz);
+        }
+        requestAnimationFrame(draw);
+      })();
+    };
+
+    img.onerror = () => {
+      canvas.style.display  = 'none';
+      fallback.style.display = 'block';
+    };
+  })();
+
+  /* ────────────────────────────────────────────────────────────
+     GSAP + LENIS + SCROLL TRIGGERS
+  ──────────────────────────────────────────────────────────── */
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  const lenis = new Lenis();
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  /* Sidebar parallax */
+  gsap.to('#sidebarImg', {
+    y: '-20%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: document.body,
+      start: 'top top',
+      end:   'bottom bottom',
+      scrub: true
+    }
+  });
+
+  /* Gold progress bar */
+  ScrollTrigger.create({
+    trigger: document.body,
+    start:   'top top',
+    end:     'bottom bottom',
+    scrub:   true,
+    onUpdate: self => {
+      document.getElementById('progressBar').style.height = (self.progress * 100) + '%';
+    }
+  });
+
+  /* Hero SplitText reveal */
+  document.fonts.ready.then(() => {
+    SplitText.create('#heroTitle', {
+      type: 'words,chars',
+      autoSplit: true,
+      onSplit(self) {
+        return gsap.from(self.chars, {
+          y:          55,
+          opacity:    0,
+          rotationX:  85,
+          stagger:    0.025,
+          duration:   0.65,
+          ease:       'back.out(1.7)',
+          delay:      0.6
+        });
+      }
+    });
+    gsap.from('#heroEyebrow', { opacity: 0, y: 18, duration: 0.7, delay: 0.35, ease: 'power2.out' });
+    gsap.from('#heroBody',    { opacity: 0, y: 18, duration: 0.7, delay: 1.1,  ease: 'power2.out' });
+    gsap.from('.hero-btns',   { opacity: 0, y: 18, duration: 0.7, delay: 1.3,  ease: 'power2.out' });
+  });
+
+  /* Writing: split-flap Solari board effect */
+  const FLAP_ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#&@';
+  const FLAP_TARGET = 'Written\nin marble\nand code.';
+
+  function splitFlapReveal(el, target) {
+    el.innerHTML = '';
+    const chars = [...target];
+    const spans = chars.map(ch => {
+      const s = document.createElement('span');
+      s.style.cssText = `display:inline-block; white-space:pre; min-width:${ch === ' ' ? '0.4em' : '0.62em'}`;
+      el.appendChild(s);
+      return { s, t: ch };
+    });
+
+    spans.forEach((item, i) => {
+      if (item.t === '\n') { item.s.innerHTML = '<br>'; return; }
+      if (item.t === ' ')  { item.s.textContent = ' '; return; }
+      const cycles = 6 + (Math.random() * 4 | 0);
+      let   n      = 0;
+      const delay  = i * 35;
+      setTimeout(function tick() {
+        if (n++ < cycles) {
+          item.s.textContent = FLAP_ALPHA[Math.random() * FLAP_ALPHA.length | 0];
+          setTimeout(tick, 52);
+        } else {
+          item.s.textContent = item.t;
+        }
+      }, delay);
+    });
+  }
+
+  ScrollTrigger.create({
+    trigger: '#writing',
+    start:   'top 72%',
+    once:    true,
+    onEnter: () => splitFlapReveal(document.getElementById('writingHeading'), FLAP_TARGET)
+  });
+
+  /* Writing image slide-in */
+  gsap.to('#digitalBustImg', {
+    opacity:  1,
+    x:        0,
+    duration: 1.1,
+    ease:     'power3.out',
+    scrollTrigger: {
+      trigger:       '#writing',
+      start:         'top 78%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+  /* Generic .reveal elements */
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity:  1,
+      y:        0,
+      duration: 0.85,
+      ease:     'power2.out',
+      scrollTrigger: {
+        trigger:       el,
+        start:         'top 86%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+  });
+
+  /* Project cards staggered */
+  gsap.to('.project-card', {
+    opacity:  1,
+    y:        0,
+    duration: 0.78,
+    ease:     'power2.out',
+    stagger:  0.12,
+    scrollTrigger: {
+      trigger:       '.projects-grid',
+      start:         'top 82%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+  /* Crimson banner */
+  gsap.to('#banner', {
+    opacity:  1,
+    y:        0,
+    duration: 0.92,
+    ease:     'power2.out',
+    scrollTrigger: {
+      trigger:       '#banner',
+      start:         'top 86%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+  /* Connect */
+  gsap.to('.connect-heading', {
+    opacity:  1,
+    y:        0,
+    duration: 0.85,
+    ease:     'power2.out',
+    scrollTrigger: {
+      trigger:       '#connect',
+      start:         'top 82%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+  gsap.to('.connect-links', {
+    opacity:  1,
+    y:        0,
+    duration: 0.85,
+    delay:    0.18,
+    ease:     'power2.out',
+    scrollTrigger: {
+      trigger:       '#connect',
+      start:         'top 78%',
+      toggleActions: 'play none none reverse'
+    }
+  });
   </script>
 </body>
 </html>
