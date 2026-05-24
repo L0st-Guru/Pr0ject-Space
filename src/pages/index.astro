@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+import { projects, philosophyBanners } from '../../projects.config.js';
+---
+
+<Layout>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="label">Pr0ject: Space</span>
+        <h1 class="hero__headline">
+          I ran into problems.<br />
+          I looked to understand them properly.<br />
+          Then I built a fix.
+        </h1>
+        <p class="hero__tagline">
+          I built this to help me, perhaps it can help you.
+        </p>
+      </div>
+    </section>
+
+    {projects.map((project, i) => (
+      <section class="project" id={project.id} data-index={i}>
+        <div class="container">
+          <!-- Project cards rendered here in design phase -->
+        </div>
+      </section>
+    ))}
+  </main>
+</Layout>
+
+<style>
+  .hero {
+    min-height: 100dvh;
+    display: flex;
+    align-items: flex-end;
+    padding-block: var(--space-xl) var(--space-lg);
+  }
+
+  .hero .container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .hero__headline {
+    font-size: var(--fs-hero);
+    font-weight: 300;
+    max-width: 18ch;
+    font-style: italic;
+  }
+
+  .hero__tagline {
+    font-size: var(--fs-tagline);
+    color: var(--c-muted);
+    font-family: var(--f-mono);
+    max-width: 48ch;
+  }
+
+  .project {
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--c-border);
+  }
+</style>
