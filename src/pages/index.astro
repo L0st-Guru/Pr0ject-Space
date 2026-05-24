@@ -1,65 +1,392 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import '../styles/global.css';
+import PhilosophyBanner from '../components/PhilosophyBanner.astro';
 import { projects, philosophyBanners } from '../../projects.config.js';
 ---
 
 <Layout>
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Minimal fixed nav -->
+  <nav class="site-nav">
+    <span class="label">Pr0ject: Space</span>
+  </nav>
+
   <main>
-    <section class="hero">
-      <div class="container">
-        <span class="label">Pr0ject: Space</span>
-        <h1 class="hero__headline">
-          I ran into problems.<br />
-          I looked to understand them properly.<br />
-          Then I built a fix.
-        </h1>
-        <p class="hero__tagline">
-          I built this to help me, perhaps it can help you.
-        </p>
+
+    <!-- ── Hero ──────────────────────────────────────────── -->
+    <section class="hero" aria-label="Introduction">
+      <div class="container hero__container">
+        <div class="hero__copy">
+
+          <h1 class="hero__headline" aria-label="I ran into problems. I looked to understand them properly. Then I built a fix.">
+            <span class="hero__line"><span class="hero__line-inner">I ran into problems.</span></span>
+            <span class="hero__line"><span class="hero__line-inner">I looked to understand</span></span>
+            <span class="hero__line"><span class="hero__line-inner">them properly.</span></span>
+            <span class="hero__line hero__line--punch"><span class="hero__line-inner">Then I built a fix.</span></span>
+          </h1>
+
+          <p class="hero__tagline">
+            I built this to help me,&nbsp;perhaps it can help you.
+          </p>
+
+        </div>
+
+        <div class="hero__scroll" aria-hidden="true">
+          <span class="label">scroll</span>
+          <div class="hero__scroll-track">
+            <div class="hero__scroll-thumb"></div>
+          </div>
+        </div>
       </div>
     </section>
 
-    {projects.map((project, i) => (
-      <section class="project" id={project.id} data-index={i}>
-        <div class="container">
-          <!-- Project cards rendered here in design phase -->
+    <!-- ── Philosophy 1 ──────────────────────────────────── -->
+    <PhilosophyBanner banner={philosophyBanners[0]} />
+
+    <!-- ── Projects 01–02 ────────────────────────────────── -->
+    {projects.slice(0, 2).map((project, i) => (
+      <article class="project-row" id={project.id}>
+        <div class="container project-row__inner">
+          <div class="project-row__meta">
+            <span class="label project-row__index">0{i + 1}</span>
+            <span class={`label project-row__status status--${project.status}`}>
+              {project.status}
+            </span>
+          </div>
+          <div class="project-row__content">
+            <h2 class="project-row__name">{project.name}</h2>
+            {project.tagline
+              ? <p class="project-row__tagline">{project.tagline}</p>
+              : <p class="project-row__tagline project-row__tagline--tbc">Coming soon.</p>
+            }
+            {project.url && (
+              <a
+                href={project.url}
+                class="project-row__link label"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {project.url.replace('https://', '')} ↗
+              </a>
+            )}
+          </div>
         </div>
-      </section>
+      </article>
     ))}
+
+    <!-- ── Philosophy 2 ──────────────────────────────────── -->
+    <PhilosophyBanner banner={philosophyBanners[1]} />
+
+    <!-- ── Projects 03–04 ────────────────────────────────── -->
+    {projects.slice(2, 4).map((project, i) => (
+      <article class="project-row" id={project.id}>
+        <div class="container project-row__inner">
+          <div class="project-row__meta">
+            <span class="label project-row__index">0{i + 3}</span>
+            <span class={`label project-row__status status--${project.status}`}>
+              {project.status}
+            </span>
+          </div>
+          <div class="project-row__content">
+            <h2 class="project-row__name">{project.name}</h2>
+            {project.tagline
+              ? <p class="project-row__tagline">{project.tagline}</p>
+              : <p class="project-row__tagline project-row__tagline--tbc">Coming soon.</p>
+            }
+            {project.url && (
+              <a
+                href={project.url}
+                class="project-row__link label"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {project.url.replace('https://', '')} ↗
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+
+    <!-- ── Philosophy 3 ──────────────────────────────────── -->
+    <PhilosophyBanner banner={philosophyBanners[2]} />
+
   </main>
+
+  <!-- ── Footer ────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="container">
+      <span class="label">© {new Date().getFullYear()} Pr0ject: Space</span>
+      <span class="label">pr0ject.space</span>
+    </div>
+  </footer>
+
 </Layout>
 
+<!-- ── Animations ────────────────────────────────────────── -->
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Scroll progress bar ──────────────────────────────────
+  const progressBar = document.getElementById('scroll-progress');
+  if (progressBar) {
+    ScrollTrigger.create({
+      start: 0,
+      end: 'max',
+      onUpdate: (self) => {
+        progressBar.style.width = `${self.progress * 100}%`;
+      },
+    });
+  }
+
+  // ── Hero entrance ────────────────────────────────────────
+  // Lines clip upward — each inner span translates from below
+  // the overflow:hidden boundary of its wrapper.
+  const heroTl = gsap.timeline({ delay: 0.25 });
+
+  heroTl
+    .from('.hero__line-inner', {
+      y: '115%',
+      duration: 1.15,
+      stagger: 0.09,
+      ease: 'power4.out',
+    })
+    .from(
+      '.hero__tagline',
+      { opacity: 0, y: 18, duration: 0.9, ease: 'power3.out' },
+      '-=0.55',
+    )
+    .from(
+      '.hero__scroll',
+      { opacity: 0, y: 12, duration: 0.7, ease: 'power3.out' },
+      '-=0.5',
+    );
+
+  // ── Scroll thumb animation (infinite loop) ──────────────
+  gsap.fromTo(
+    '.hero__scroll-thumb',
+    { y: '-100%' },
+    { y: '200%', duration: 1.8, ease: 'power2.inOut', repeat: -1, repeatDelay: 0.4 },
+  );
+
+  // ── Philosophy banners ──────────────────────────────────
+  document.querySelectorAll('.philosophy-banner').forEach((banner) => {
+    const rule  = banner.querySelector('.banner__rule');
+    const law   = banner.querySelector('.banner__law');
+    const quote = banner.querySelector('.banner__quote');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: banner,
+        start: 'top 68%',
+        toggleActions: 'play none none none',
+      },
+    });
+
+    tl.fromTo(rule,
+      { scaleX: 0 },
+      { scaleX: 1, duration: 1, ease: 'power3.inOut' },
+    );
+    tl.from(law,
+      { opacity: 0, y: 8, duration: 0.65, ease: 'power3.out' },
+      '-=0.35',
+    );
+    tl.from(quote,
+      { opacity: 0, y: 44, duration: 1.2, ease: 'power3.out' },
+      '-=0.4',
+    );
+  });
+
+  // ── Project rows ─────────────────────────────────────────
+  document.querySelectorAll('.project-row').forEach((row) => {
+    const index   = row.querySelector('.project-row__index');
+    const name    = row.querySelector('.project-row__name');
+    const tagline = row.querySelector('.project-row__tagline');
+    const link    = row.querySelector('.project-row__link');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: row,
+        start: 'top 72%',
+        toggleActions: 'play none none none',
+      },
+    });
+
+    tl.from(index,   { opacity: 0, x: -16, duration: 0.5, ease: 'power3.out' });
+    tl.from(name,    { opacity: 0, y: 28,  duration: 0.9, ease: 'power3.out' }, '-=0.2');
+    if (tagline) tl.from(tagline, { opacity: 0, y: 18, duration: 0.75, ease: 'power3.out' }, '-=0.45');
+    if (link)    tl.from(link,    { opacity: 0, y: 10, duration: 0.6,  ease: 'power3.out' }, '-=0.35');
+  });
+</script>
+
 <style>
+  /* ── Hero ─────────────────────────────────────────────── */
   .hero {
+    position: relative;
     min-height: 100dvh;
     display: flex;
     align-items: flex-end;
-    padding-block: var(--space-xl) var(--space-lg);
+    padding-bottom: clamp(4rem, 8vw, var(--space-xl));
   }
 
-  .hero .container {
+  .hero__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .hero__copy {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
   }
 
   .hero__headline {
-    font-size: var(--fs-hero);
-    font-weight: 300;
-    max-width: 18ch;
+    font-size: var(--fs-display);
     font-style: italic;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    gap: 0.06em;
+  }
+
+  /* Clip container — overflow hidden masks the upward translate */
+  .hero__line {
+    display: block;
+    overflow: hidden;
+    line-height: 1.08;
+    padding-bottom: 0.06em; /* prevent descender clipping */
+  }
+
+  .hero__line-inner {
+    display: block;
+  }
+
+  .hero__line--punch .hero__line-inner {
+    color: var(--c-accent);
   }
 
   .hero__tagline {
+    font-family: var(--f-mono);
     font-size: var(--fs-tagline);
     color: var(--c-muted);
-    font-family: var(--f-mono);
-    max-width: 48ch;
+    max-width: 52ch;
+    line-height: var(--lh-loose);
   }
 
-  .project {
-    padding-block: var(--space-xl);
+  /* Scroll indicator */
+  .hero__scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+
+  .hero__scroll-track {
+    width: 1px;
+    height: 56px;
+    background: var(--c-border);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero__scroll-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, var(--c-accent));
+  }
+
+  /* ── Project rows ────────────────────────────────────── */
+  .project-row {
     border-top: 1px solid var(--c-border);
+    padding-block: var(--space-xl);
+  }
+
+  .project-row__inner {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .project-row__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding-top: 0.4em;
+  }
+
+  .project-row__index {
+    color: var(--c-dim);
+    font-size: 0.65rem;
+  }
+
+  .project-row__status {
+    color: var(--c-dim);
+    font-size: 0.6rem;
+  }
+
+  .status--live    { color: #7ecf8e; }
+  .status--beta    { color: #c8b89a; }
+  .status--building { color: #8aaecf; }
+  .status--soon    { color: var(--c-dim); }
+
+  .project-row__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .project-row__name {
+    font-size: var(--fs-section);
+    font-style: italic;
+    font-weight: 300;
+    line-height: var(--lh-tight);
+  }
+
+  .project-row__tagline {
+    font-size: var(--fs-body);
+    color: var(--c-muted);
+    max-width: 54ch;
+    line-height: var(--lh-loose);
+  }
+
+  .project-row__tagline--tbc {
+    color: var(--c-dim);
+    font-style: italic;
+  }
+
+  .project-row__link {
+    color: var(--c-accent);
+    text-decoration: none;
+    transition: color 0.2s var(--ease-smooth);
+  }
+
+  .project-row__link:hover {
+    color: var(--c-text);
+  }
+
+  /* ── Responsive ──────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .project-row__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+
+    .project-row__meta {
+      flex-direction: row;
+      gap: var(--space-md);
+    }
   }
 </style>
