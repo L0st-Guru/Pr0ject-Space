@@ -7,8 +7,8 @@
 
 /* ─── Tokens ─────────────────────────────────────────────── */
 :root {
-  --c-bg:      #0f0f0f;
-  --c-surface: #161616;
+  --c-bg:      #0d1117;
+  --c-surface: #131921;
   --c-border:  rgba(255, 255, 255, 0.07);
   --c-rule:    rgba(255, 255, 255, 0.10);
   --c-text:    #f0ede6;
@@ -48,7 +48,7 @@
 html {
   background-color: var(--c-bg);
   color: var(--c-text);
-  font-family: var(--f-serif);
+  font-family: var(--f-mono);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -62,10 +62,10 @@ body {
 
 /* ─── Typography ─────────────────────────────────────────── */
 h1, h2, h3 {
-  font-family: var(--f-serif);
-  font-weight: 300;
+  font-family: var(--f-mono);
+  font-weight: 400;
   line-height: var(--lh-tight);
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
 }
 
 p {

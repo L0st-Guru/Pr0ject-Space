@@ -30,7 +30,7 @@ export const projects = [
     tagline: null,
     url: null,
     status: 'soon',
-    image: '/images/Janus_smiling.png',
+    image: '/images/Janus%20smiling.png',
   },
   {
     id: 'coeus',
