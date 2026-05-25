@@ -11,15 +11,34 @@ import { projects, philosophyBanners } from '../../projects.config.js';
   <!-- Scroll progress bar -->
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-  <!-- Minimal fixed nav -->
-  <nav class="site-nav">
-    <span class="label">Pr0ject: Space</span>
+  <!-- Fixed nav -->
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="#hero" class="nav__brand">PR0JECT: SPACE</a>
+    <ul class="nav__links" role="list">
+      <li><a href="#about" class="nav__link">About</a></li>
+      <li><a href="#brands" class="nav__link">Brands</a></li>
+      <li><a href="#philosophies" class="nav__link">Philosophies</a></li>
+    </ul>
   </nav>
 
   <main>
 
-    <!-- ── Hero ──────────────────────────────────────────── -->
-    <section class="hero" aria-label="Introduction">
+    <!-- ── Hero ──────────────────────────────────────────────── -->
+    <section class="hero" id="hero" aria-label="Introduction">
+
+      <!-- Hermes image: diagonal slice from right -->
+      <div class="hero__bg" aria-hidden="true">
+        <img
+          src="/images/Hermes_delivery.png"
+          alt=""
+          width="900"
+          height="1200"
+        />
+      </div>
+
+      <!-- Left-to-right gradient keeps text readable -->
+      <div class="hero__overlay" aria-hidden="true"></div>
+
       <div class="container hero__container">
         <div class="hero__copy">
 
@@ -45,81 +64,80 @@ import { projects, philosophyBanners } from '../../projects.config.js';
       </div>
     </section>
 
-    <!-- ── Philosophy 1 ──────────────────────────────────── -->
-    <PhilosophyBanner banner={philosophyBanners[0]} />
+    <!-- ── Philosophy ─────────────────────────────────────────── -->
+    <section id="philosophies" aria-label="Philosophies">
+      {philosophyBanners.map((banner) => (
+        <PhilosophyBanner banner={banner} />
+      ))}
+    </section>
 
-    <!-- ── Projects 01–02 ────────────────────────────────── -->
-    {projects.slice(0, 2).map((project, i) => (
-      <article class="project-row" id={project.id}>
-        <div class="container project-row__inner">
-          <div class="project-row__meta">
-            <span class="label project-row__index">0{i + 1}</span>
-            <span class={`label project-row__status status--${project.status}`}>
-              {project.status}
-            </span>
-          </div>
-          <div class="project-row__content">
-            <h2 class="project-row__name">{project.name}</h2>
-            {project.tagline
-              ? <p class="project-row__tagline">{project.tagline}</p>
-              : <p class="project-row__tagline project-row__tagline--tbc">Coming soon.</p>
-            }
-            {project.url && (
-              <a
-                href={project.url}
-                class="project-row__link label"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {project.url.replace('https://', '')} ↗
-              </a>
-            )}
-          </div>
+    <!-- ── Diagonal slice: Coeus ──────────────────────────────── -->
+    <div class="img-slice" aria-hidden="true">
+      <div class="img-slice__inner">
+        <img
+          src="/images/Coeus_writing.png"
+          alt=""
+          width="1600"
+          height="900"
+        />
+      </div>
+    </div>
+
+    <!-- ── Products ───────────────────────────────────────────── -->
+    <section class="products" id="brands" aria-label="Products">
+      <div class="container">
+        <div class="products__grid">
+
+          {projects.map((project, i) => (
+            <article
+              class={`product-card${project.image ? ' product-card--img' : ''}`}
+              id={project.id}
+            >
+              {project.image && (
+                <div class="product-card__bg" aria-hidden="true">
+                  <img
+                    src={project.image}
+                    alt=""
+                    width="600"
+                    height="800"
+                  />
+                </div>
+              )}
+
+              <div class="product-card__header">
+                <span class="product-card__num">0{i + 1}</span>
+                <span class={`card-status card-status--${project.status}`}>
+                  {project.status}
+                </span>
+              </div>
+
+              <div class="product-card__body">
+                <h2 class="product-card__name">{project.name}</h2>
+                {project.tagline && (
+                  <p class="product-card__tagline">{project.tagline}</p>
+                )}
+                {project.url && (
+                  <a
+                    href={project.url}
+                    class="product-card__link"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {project.url.replace('https://', '')} ↗
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+
         </div>
-      </article>
-    ))}
-
-    <!-- ── Philosophy 2 ──────────────────────────────────── -->
-    <PhilosophyBanner banner={philosophyBanners[1]} />
-
-    <!-- ── Projects 03–04 ────────────────────────────────── -->
-    {projects.slice(2, 4).map((project, i) => (
-      <article class="project-row" id={project.id}>
-        <div class="container project-row__inner">
-          <div class="project-row__meta">
-            <span class="label project-row__index">0{i + 3}</span>
-            <span class={`label project-row__status status--${project.status}`}>
-              {project.status}
-            </span>
-          </div>
-          <div class="project-row__content">
-            <h2 class="project-row__name">{project.name}</h2>
-            {project.tagline
-              ? <p class="project-row__tagline">{project.tagline}</p>
-              : <p class="project-row__tagline project-row__tagline--tbc">Coming soon.</p>
-            }
-            {project.url && (
-              <a
-                href={project.url}
-                class="project-row__link label"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {project.url.replace('https://', '')} ↗
-              </a>
-            )}
-          </div>
-        </div>
-      </article>
-    ))}
-
-    <!-- ── Philosophy 3 ──────────────────────────────────── -->
-    <PhilosophyBanner banner={philosophyBanners[2]} />
+      </div>
+    </section>
 
   </main>
 
-  <!-- ── Footer ────────────────────────────────────────── -->
-  <footer class="site-footer">
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="site-footer" id="about">
     <div class="container">
       <span class="label">© {new Date().getFullYear()} Pr0ject: Space</span>
       <span class="label">pr0ject.space</span>
@@ -128,14 +146,14 @@ import { projects, philosophyBanners } from '../../projects.config.js';
 
 </Layout>
 
-<!-- ── Animations ────────────────────────────────────────── -->
+<!-- ── Animations ──────────────────────────────────────────── -->
 <script>
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // ── Scroll progress bar ──────────────────────────────────
+  // ── Scroll progress bar ─────────────────────────────────
   const progressBar = document.getElementById('scroll-progress');
   if (progressBar) {
     ScrollTrigger.create({
@@ -148,8 +166,6 @@ import { projects, philosophyBanners } from '../../projects.config.js';
   }
 
   // ── Hero entrance ────────────────────────────────────────
-  // Lines clip upward — each inner span translates from below
-  // the overflow:hidden boundary of its wrapper.
   const heroTl = gsap.timeline({ delay: 0.25 });
 
   heroTl
@@ -170,14 +186,23 @@ import { projects, philosophyBanners } from '../../projects.config.js';
       '-=0.5',
     );
 
-  // ── Scroll thumb animation (infinite loop) ──────────────
+  // ── Hero image fade in ───────────────────────────────────
+  gsap.from('.hero__bg img', {
+    opacity: 0,
+    scale: 1.04,
+    duration: 1.8,
+    delay: 0.15,
+    ease: 'power3.out',
+  });
+
+  // ── Scroll thumb (infinite loop) ────────────────────────
   gsap.fromTo(
     '.hero__scroll-thumb',
     { y: '-100%' },
     { y: '200%', duration: 1.8, ease: 'power2.inOut', repeat: -1, repeatDelay: 0.4 },
   );
 
-  // ── Philosophy banners ──────────────────────────────────
+  // ── Philosophy banners ───────────────────────────────────
   document.querySelectorAll('.philosophy-banner').forEach((banner) => {
     const rule  = banner.querySelector('.banner__rule');
     const law   = banner.querySelector('.banner__law');
@@ -205,39 +230,108 @@ import { projects, philosophyBanners } from '../../projects.config.js';
     );
   });
 
-  // ── Project rows ─────────────────────────────────────────
-  document.querySelectorAll('.project-row').forEach((row) => {
-    const index   = row.querySelector('.project-row__index');
-    const name    = row.querySelector('.project-row__name');
-    const tagline = row.querySelector('.project-row__tagline');
-    const link    = row.querySelector('.project-row__link');
+  // ── Diagonal slice: parallax + reveal ───────────────────
+  document.querySelectorAll('.img-slice').forEach((slice) => {
+    const inner = slice.querySelector<HTMLElement>('.img-slice__inner');
+    const img   = slice.querySelector<HTMLElement>('img');
 
-    const tl = gsap.timeline({
+    if (inner) {
+      gsap.from(inner, {
+        opacity: 0,
+        duration: 1.3,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: slice,
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }
+
+    if (img) {
+      gsap.fromTo(img,
+        { yPercent: -7 },
+        {
+          yPercent: 7,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: slice,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        },
+      );
+    }
+  });
+
+  // ── Product cards staggered reveal ──────────────────────
+  document.querySelectorAll('.product-card').forEach((card, i) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 30,
+      duration: 0.85,
+      delay: (i % 3) * 0.1,
+      ease: 'power3.out',
       scrollTrigger: {
-        trigger: row,
-        start: 'top 72%',
+        trigger: card,
+        start: 'top 88%',
         toggleActions: 'play none none none',
       },
     });
-
-    tl.from(index,   { opacity: 0, x: -16, duration: 0.5, ease: 'power3.out' });
-    tl.from(name,    { opacity: 0, y: 28,  duration: 0.9, ease: 'power3.out' }, '-=0.2');
-    if (tagline) tl.from(tagline, { opacity: 0, y: 18, duration: 0.75, ease: 'power3.out' }, '-=0.45');
-    if (link)    tl.from(link,    { opacity: 0, y: 10, duration: 0.6,  ease: 'power3.out' }, '-=0.35');
   });
 </script>
 
 <style>
-  /* ── Hero ─────────────────────────────────────────────── */
+  /* ── Hero ────────────────────────────────────────────── */
   .hero {
     position: relative;
     min-height: 100dvh;
     display: flex;
     align-items: flex-end;
+    padding-top: var(--nav-h);
     padding-bottom: clamp(4rem, 8vw, var(--space-xl));
+    overflow: hidden;
+  }
+
+  /* Hermes image — right-side diagonal slice */
+  .hero__bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 62%;
+    height: 100%;
+    z-index: 0;
+    clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+    overflow: hidden;
+  }
+
+  .hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    opacity: 0.42;
+  }
+
+  /* Left-to-right fade — protects headline legibility */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      100deg,
+      rgba(15, 15, 15, 1)    0%,
+      rgba(15, 15, 15, 0.96) 38%,
+      rgba(15, 15, 15, 0.55) 62%,
+      rgba(15, 15, 15, 0.12) 100%
+    );
+    pointer-events: none;
   }
 
   .hero__container {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     gap: var(--space-xl);
@@ -258,12 +352,12 @@ import { projects, philosophyBanners } from '../../projects.config.js';
     gap: 0.06em;
   }
 
-  /* Clip container — overflow hidden masks the upward translate */
+  /* Clip wrapper: overflow hidden masks the upward enter */
   .hero__line {
     display: block;
     overflow: hidden;
     line-height: 1.08;
-    padding-bottom: 0.06em; /* prevent descender clipping */
+    padding-bottom: 0.06em;
   }
 
   .hero__line-inner {
@@ -307,86 +401,175 @@ import { projects, philosophyBanners } from '../../projects.config.js';
     background: linear-gradient(to bottom, transparent, var(--c-accent));
   }
 
-  /* ── Project rows ────────────────────────────────────── */
-  .project-row {
-    border-top: 1px solid var(--c-border);
+  /* ── Diagonal image slice ──────────────────────────── */
+  .img-slice {
+    position: relative;
+    width: 100%;
+    height: clamp(280px, 44vh, 560px);
+    pointer-events: none;
+  }
+
+  .img-slice__inner {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    /* parallelogram cut: ~5° angle at typical viewport widths */
+    clip-path: polygon(0 9%, 100% 0%, 100% 91%, 0% 100%);
+  }
+
+  .img-slice__inner img {
+    width: 100%;
+    height: 120%;       /* extra height consumed by parallax */
+    margin-top: -10%;   /* centre the starting frame */
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* ── Products grid ─────────────────────────────────── */
+  .products {
     padding-block: var(--space-xl);
   }
 
-  .project-row__inner {
+  /* Gap lines achieved by setting bg on the grid itself */
+  .products__grid {
     display: grid;
-    grid-template-columns: 5rem 1fr;
-    gap: var(--space-lg);
-    align-items: start;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--c-border);
+    border: 1px solid var(--c-border);
   }
 
-  .project-row__meta {
+  .product-card {
+    position: relative;
+    padding: var(--space-lg);
+    background: var(--c-bg);
+    min-height: 400px;
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
-    padding-top: 0.4em;
+    overflow: hidden;
+    transition: background 0.3s var(--ease-smooth);
   }
 
-  .project-row__index {
+  .product-card:hover {
+    background: #141414;
+  }
+
+  /* Janus background image at low opacity */
+  .product-card__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .product-card__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0.1;
+    mix-blend-mode: luminosity;
+  }
+
+  .product-card__header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+  }
+
+  .product-card__num {
+    font-family: var(--f-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
     color: var(--c-dim);
-    font-size: 0.65rem;
   }
 
-  .project-row__status {
-    color: var(--c-dim);
-    font-size: 0.6rem;
+  .card-status {
+    font-family: var(--f-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
-  .status--live    { color: #7ecf8e; }
-  .status--beta    { color: #c8b89a; }
-  .status--building { color: #8aaecf; }
-  .status--soon    { color: var(--c-dim); }
+  .card-status--soon     { color: var(--c-accent); }
+  .card-status--live     { color: var(--c-text); }
+  .card-status--beta     { color: var(--c-muted); }
+  .card-status--building { color: var(--c-muted); }
 
-  .project-row__content {
+  .product-card__body {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    margin-top: auto;
+    padding-top: var(--space-xl);
   }
 
-  .project-row__name {
-    font-size: var(--fs-section);
-    font-style: italic;
-    font-weight: 300;
-    line-height: var(--lh-tight);
+  .product-card__name {
+    font-family: var(--f-mono);
+    font-size: clamp(1rem, 2vw, 1.45rem);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--c-text);
+    line-height: 1.1;
   }
 
-  .project-row__tagline {
+  .product-card__tagline {
+    font-family: var(--f-serif);
     font-size: var(--fs-body);
+    font-style: italic;
     color: var(--c-muted);
-    max-width: 54ch;
     line-height: var(--lh-loose);
   }
 
-  .project-row__tagline--tbc {
-    color: var(--c-dim);
-    font-style: italic;
-  }
-
-  .project-row__link {
+  .product-card__link {
+    font-family: var(--f-mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--c-accent);
     text-decoration: none;
     transition: color 0.2s var(--ease-smooth);
+    margin-top: var(--space-xs);
   }
 
-  .project-row__link:hover {
+  .product-card__link:hover {
     color: var(--c-text);
   }
 
-  /* ── Responsive ──────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .project-row__inner {
-      grid-template-columns: 1fr;
-      gap: var(--space-sm);
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .hero__bg {
+      width: 100%;
+      clip-path: none;
     }
 
-    .project-row__meta {
-      flex-direction: row;
-      gap: var(--space-md);
+    .hero__overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(15, 15, 15, 0.55) 0%,
+        rgba(15, 15, 15, 0.88) 55%,
+        rgba(15, 15, 15, 1)   100%
+      );
+    }
+
+    .products__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 540px) {
+    .products__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .nav__links {
+      gap: var(--space-sm);
     }
   }
 </style>

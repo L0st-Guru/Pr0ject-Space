@@ -14,6 +14,7 @@ export const projects = [
     tagline: 'A focused deal qualification tool. Know exactly where you are with every opportunity. Built around closing, not cataloguing.',
     url: 'https://cyberpipeline.pr0ject.space',
     status: 'soon',
+    image: '/images/Plutus%20working.png',
   },
   {
     id: 'console',
@@ -21,6 +22,7 @@ export const projects = [
     tagline: 'Every deal gets its own space. Videos, timelines, roadmaps, assets, financials. One link. You control it, they just show up.',
     url: 'https://console.pr0ject.space',
     status: 'soon',
+    image: '/images/Narcissus%20Presenting%202.png',
   },
   {
     id: 'janus',
@@ -28,6 +30,7 @@ export const projects = [
     tagline: null,
     url: null,
     status: 'soon',
+    image: '/images/Janus_smiling.png',
   },
   {
     id: 'coeus',
@@ -35,6 +38,7 @@ export const projects = [
     tagline: 'I think out loud in essays. What I\'m seeing, where it\'s going, and why it matters. If you\'re asking the same questions — come in.',
     url: null,
     status: 'soon',
+    image: null,
   },
 ];
 

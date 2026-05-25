@@ -13,7 +13,7 @@ const { banner } = Astro.props;
   <div class="container">
     <div class="banner__rule" aria-hidden="true"></div>
     <div class="banner__body">
-      <p class="banner__law label">{banner.law}</p>
+      <p class="banner__law">{banner.law}</p>
       <blockquote class="banner__quote">
         {banner.text}
       </blockquote>
@@ -42,8 +42,11 @@ const { banner } = Astro.props;
   }
 
   .banner__law {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     color: var(--c-accent);
-    letter-spacing: 0.18em;
   }
 
   .banner__quote {
@@ -51,7 +54,7 @@ const { banner } = Astro.props;
     font-size: var(--fs-quote);
     font-weight: 300;
     font-style: italic;
-    line-height: 1.25;
+    line-height: 1.22;
     color: var(--c-text);
     max-width: 22ch;
     quotes: none;
