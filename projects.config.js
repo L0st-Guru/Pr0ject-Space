@@ -1,58 +1,97 @@
 /**
  * projects.config.js
  * Single source of truth for all Pr0jects and philosophy banners.
- * Adding a new Pr0ject = 5 lines in the projects array.
  *
- * status: 'live' | 'beta' | 'building' | 'soon'
- * url: null if TBC
+ * isLive: true = accent dot + glow on status badge
+ * image: path to bg image (used as low-opacity card background)
+ * problem/solution: if present, renders P/S format; otherwise uses tagline
  */
 
 export const projects = [
   {
     id: 'cyberpipeline',
-    name: 'CyberPipeline',
-    tagline: 'A focused deal qualification tool. Know exactly where you are with every opportunity. Built around closing, not cataloguing.',
+    num: '01',
+    displayId: 'CyberPipeline',
+    name: 'PR0JECT:PIPELINE',
+    problem: 'Too bloated, wrong focus, no guidance. You\'re dumping information, not making decisions.',
+    solution: 'A narrowed, structured deal qualification tool. Know where you are with every deal. Built for cybersecurity sales specifically.',
+    tagline: null,
     url: 'https://cyberpipeline.pr0ject.space',
-    status: 'soon',
-    image: '/images/Plutus%20working.png',
+    urlLabel: 'cyberpipeline.pr0ject.space',
+    isLive: true,
+    statusLabel: 'Live soon',
+    image: null,
   },
   {
     id: 'console',
-    name: 'Console',
-    tagline: 'Every deal gets its own space. Videos, timelines, roadmaps, assets, financials. One link. You control it, they just show up.',
-    url: 'https://console.pr0ject.space',
-    status: 'soon',
-    image: '/images/Narcissus%20Presenting%202.png',
-  },
-  {
-    id: 'janus',
-    name: 'Janus',
+    num: '02',
+    displayId: 'Console',
+    name: 'PR0JECT:CONSOLE',
+    problem: 'Your sales collateral is scattered across email threads nobody can find. The customer is doing your admin for you.',
+    solution: 'Every deal gets its own space. One link. Videos, timelines, roadmaps, assets, financials — all there. You control it. They just show up.',
     tagline: null,
     url: null,
-    status: 'soon',
-    image: '/images/Janus%20smiling.png',
+    urlLabel: 'console.pr0ject.space',
+    isLive: false,
+    statusLabel: 'Coming soon',
+    image: null,
   },
   {
     id: 'coeus',
-    name: 'Coeus',
+    num: '03',
+    displayId: 'Coeus',
+    name: 'PR0JECT:COEUS',
+    problem: null,
+    solution: null,
     tagline: 'I think out loud in essays. What I\'m seeing, where it\'s going, and why it matters. If you\'re asking the same questions — come in.',
     url: null,
-    status: 'soon',
+    urlLabel: 'Substack · Long-form',
+    isLive: true,
+    statusLabel: 'Live',
     image: null,
+  },
+  {
+    id: 'janus',
+    num: '04',
+    displayId: 'Janus',
+    name: 'PR0JECT:JANUS',
+    problem: null,
+    solution: null,
+    tagline: null,
+    url: null,
+    urlLabel: '—',
+    isLive: false,
+    statusLabel: 'Coming soon',
+    image: '/images/Janus%20smiling.png',
   },
 ];
 
 export const philosophyBanners = [
   {
+    num: 'i.',
+    numLabel: 'Law one',
     law: 'Kidlin\'s Law',
-    text: 'If you can write the problem down clearly, you\'re halfway to solving it.',
+    text: '"If you can write the problem down clearly, you\'re halfway to solving it."',
+    discipline: 'Diagnosis',
+    form: 'Operational',
+    citedIn: 'CyberPipeline',
   },
   {
+    num: 'ii.',
+    numLabel: 'Law two',
     law: 'First Principles',
-    text: 'Strip it back to what\'s actually true, then build from there.',
+    text: '"Strip it back to what\'s actually true, then build from there."',
+    discipline: 'Method',
+    form: 'Foundational',
+    citedIn: 'Console',
   },
   {
+    num: 'iii.',
+    numLabel: 'Law three',
     law: 'Jevons Paradox',
-    text: 'Efficiency creates demand. Build accordingly.',
+    text: '"Efficiency creates demand. Build accordingly."',
+    discipline: 'Economics',
+    form: 'Cautionary',
+    citedIn: 'Janus',
   },
 ];
